@@ -1,6 +1,5 @@
-#import "@preview/colorful-boxes:1.2.0": *
-#set heading(numbering: "1.1.1")
 
+// --------------- Imports de modules
 #import "@preview/codly:1.3.0": *
 #import "@preview/codly-languages:0.1.1": *
 #show: codly-init.with()
@@ -10,6 +9,41 @@
 	number-format: none
 )
 
+#import "@preview/frame-it:1.2.0": *
+
+#let (example, feature, variant, syntax) = frames(
+  feature: ("Fonctionnalité", rgb("ADD8E6")),
+  // For each frame kind, you have to provide its supplement title to be displayed
+  variant: ("Variant",),
+  // You can provide a color or leave it out and it will be generated
+  example: ("Exemple", gray),
+  // You can add as many as you want
+  syntax: ("Syntax",),
+)
+// This is necessary. Don't forget this!
+#show: frame-style(styles.boxy)
+
+// --------------- Personnalisation du document
+#set text(
+  font: "New Computer Modern",
+  lang: "fr"
+)
+
+#set page(
+  paper: "a4",
+  margin: (x: 1.8cm, y: 1.5cm),
+  numbering: "1"
+)
+
+#set par(
+  justify: true,
+  leading: 0.52em,
+)
+
+#set heading(numbering: "1.1.1")
+
+
+// --------------- Contenu
 
 = Rédaction
 
@@ -100,28 +134,23 @@ J'ai justement utilisé cette technique pour référencer le titre de cette sect
 Nous devons donc d'abord poser un label (une étiquette) à la partie du document qui nous intéresse.
 Pour cela, on utilise les chevrons (symboles \< et \>) pour entourer le nom de notre label.
 
-Ensuite, on va créer une référence à ce label dans notre texte en utilisant \@ suivi du nom utilisé précédemment. Typst mettra automatiquement un libellé associé au niveau du titre(comme Chapter, Section) ou Figure si je référence une figure.
+Ensuite, on va créer une référence à ce label dans notre texte en utilisant \@ suivi du nom utilisé précédemment. Typst mettra automatiquement un libellé associé au niveau du titre(comme Chapitre, Section) ou Figure si je référence une figure.
 
 On ne peut poser des labels que sur des éléments numérotés comme les titre des chapitres, section, figures, etc.
 
 
 == Notes de bas de page
-Au lieu d'utiliser des parenthèses, #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
+Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
 
 ```typst
-Au lieu d'utiliser des parenthèses, #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
+Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
 ```
 
-#colorbox(
-  title: "Fonctions",
-  color: "blue",
-  radius: 2pt,
-  width: auto,
-)[
+#feature[Fonctions][
   Cette instruction introduit un nouveau concept, l'usage d'une *fonction* :
-  - *\#* signifie que l'on commence un bloc de code
-  - ensuite il y a le nom de la fonction appelée, ici _footnote_.
-  - On peut remarquer également qu'il y a une expression entre crochets (\[ et \])
+    - *\#* signifie que l'on commence un bloc de code
+    - ensuite il y a le nom de la fonction appelée, ici _footnote_.
+    - On peut remarquer également qu'il y a une expression entre crochets (\[ et \])
 ]
 
 L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombre de tâches:
@@ -129,14 +158,9 @@ L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombr
 - lui associer un label (que l'on ne connait pas),
 - poser une référence à l'emplacement de la fonction.
 
-#colorbox(
-  title: "Qu'est-ce qu'une expression ?",
-  color: "blue",
-  radius: 2pt,
-  width: auto,
-)[
+#feature[Qu'est-ce qu'une expression ?][
   C'est un bloc de texte contenant des instructions, comme par exemple des mots avec emphase, des appels de fonction, etc...
-  L'expression sera évaluée, transformée. Elle n'est pas figée comme  une chaîne de caractères.
+    L'expression sera évaluée, transformée. Elle n'est pas figée comme  une chaîne de caractères.
 ]
 
 
@@ -157,7 +181,7 @@ qui devient :
 On peut voir que la largeur de la photo est celle des paragraphes, câd toute la largeur disponible dans les marges de la page.
 Le texte que j'ai mis pour désigner l'image est un chemin relatif au fichier source. Ici, j'ai un sous-dosssier images dans laquelle se trouve celle-ci.
 
-On peut restreincre la largeur en ajoutant un deuxième paramètre :
+On peut restreindre la largeur en ajoutant un deuxième paramètre :
 
 ```typst
 #image("images/Ramen Photo.jpg", width: 70%)
@@ -169,27 +193,17 @@ qui devient :
 La largeur spécifiée est proportionnelle à la largeur totale (70% de cette dernière), mais on aurait pu y écrire une mesure en _cm_ ou en _in_(inches).
 On constate également que notre image n'est pas centrée par défaut, elle s'aligne à gauche.
 
-#colorbox(
-  title: "Fonctions bis",
-  color: "blue",
-  radius: 2pt,
-  width: auto,
-)[
+#feature[Fonctions bis][
   On utilise encore une *fonction* cette fois-ci, c'est la fonction _image_.
-  - entre parenthèses les paramètres qu'elle accepte. On peut remarquer également qu'il y a :
-   - un paramètre nommé _width_ qui est optionnel,
-   - le premier paramètre qui n'est pas nommé et qui n'est pas optionnel,
-   - enfin le premier paramètre reçoit une chaine de caractères, elle est donc entourée de guillemets.
+    - entre parenthèses les paramètres qu'elle accepte. On peut remarquer également qu'il y a :
+     - un paramètre nommé _width_ qui est optionnel,
+     - le premier paramètre qui n'est pas nommé et qui n'est pas optionnel,
+     - enfin le premier paramètre reçoit une chaine de caractères, elle est donc entourée de guillemets.
 ]
 
-#colorbox(
-  title: "Parenthèses ou crochets ?",
-  color: "red",
-  radius: 2pt,
-  width: auto,
-)[
+#feature[Parenthèses ou crochets ?][
   C'est à n'y rien comprendre pour _footnote_ on utilise des crochets, pour _image_ des parenthèses.
-  Les crochets sont utilisés quand le paramètre attendu est une expression, sinon on utilise des parenthèses.
+    Les crochets sont utilisés quand le paramètre attendu est une expression, sinon on utilise des parenthèses.
 ]
 
 === Figures
@@ -268,6 +282,58 @@ Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. 
 ```typst
 Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. $ S = pi r^2 $ Comme on peut le voir ici:
 ```
+
+= Mise en Page
+
+== Premier aperçu
+```typst
+#text(font: "Times New Roman")[
+  Un petit peu de texte pour lequel on change la police pour la mettre en _Times New Roman_.
+]
+```
+
+nous donne ceci :
+
+#text(font: "Times New Roman")[
+  Un petit peu de texte pour lequel on change la police pour la mettre en _Times New Roman_.
+]
+
+Le problème de cette approche est qu'elle nous oblige à écrire cela pour tout notre texte, ou inclure tout le document dans l'appel de la fonction _text_.
+
+On peut résoudre ce problème comme ceci:
+
+```typst
+#set text(
+  font: "New Computer Modern",
+  lang: "fr"
+)
+```
+Je l'ai utilisé pour cet ouvrage. La fonction _set_ permet d'appliquer à la fonction _text_ des valeurs par défaut, ici la valeur de font (police de caractères en anglais), ainsi que la langue du texte en français.
+Ce qui fait qu'à chaque fois que Typst fait appel à la fonction _text_, il applique le paramètre fourni comme on peut le voir dans l'exemple précédent et s'il n'y en a pas, il utilise le paramètre par défaut.
+
+#feature[Mais pourquoi cela s'applique à tout le document ?][
+  Effectivement, je n'ai pas écrit d'appel à _text_ en dehors de l'exemple.
+  Mais cette fonction est appelée à chaque fois que _Typst_ souhaite transformer une expression _texte_ en objet du document produit.
+  Et c'est le cas pour tous les types d'objets, ils ont tous des fonctions associées :
+  - _heading_ pour les titres,
+  - _page_ pour les pages,
+  - _par_ pour les paragraphes,
+  - ...
+]
+
+Voici les autres réglages appliqués à ce document :
+```typst
+#set page(
+  paper: "a4",
+  margin: (x: 1.8cm, y: 1.5cm),
+)
+#set par(
+  justify: true,
+  leading: 0.52em,
+)
+#set heading(numbering: "1.1.1")
+```
+
 
 #bibliography("bibliographie.yml")
 
