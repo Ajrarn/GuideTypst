@@ -47,7 +47,12 @@
   leading: 0.52em,
 )
 
-#set heading(numbering: "1.")
+#set heading(numbering: "1.1 -")
+
+#show heading.where(depth: 1): body => {
+  pagebreak(weak: true)
+  body
+}
 
 
 // --------------- Contenu
@@ -88,9 +93,14 @@ Le deuxième outil, ce sont aussi des boîtes de texte pour attirer ton attentio
 
 Quand je penserai à faire remarquer un concept important, j'utiliserai ce genre de boîte.
 
+J'ai choisi une approche plutôt didactique. On va découvrir les concepts du plus simple au plus compliqué.
+Du coup, les sujets risquent de s'entrecroiser.
+Je commence bien évidemment par les outils pour écrire le document, et cela restera le fil directeur, mais cela sera interrompu par des explcations conceptuelles qui devraient permettre de garder une bonne compéhension.
+
 = Les bases de la Rédaction
 
 Le plus important dans le document, c'est sa structure et son contenu. Nous allons donc commencer par cela.
+Dans cette première partie, nous n'allons voir que la syntaxe la plus simple, celle qui ne nécessite pas beaucoup d'explications.
 
 == Les titres
 === sous-titres
@@ -207,19 +217,73 @@ Ensuite, on va créer une référence à ce label dans notre texte en utilisant 
 On ne peut poser des labels que sur des éléments numérotés comme les titre des chapitres, section, figures, etc.
 
 
-== Concepts un peu plus avancés
-Pour aller un peu plus loin, on va devoir évoquer les fonctions et les types de données. En effet, on va devoir utiliser des fonctions pour réaliser un certain nombre d'autres choses un peu plus avancées.
+= Introduction aux fonctions
+Pour aller un peu plus loin, on va devoir évoquer les fonctions et les types de données. En effet, on va devoir utiliser des fonctions pour insérer des images, mettre des notes de bas de page, ... .
+Et pour comprendre comment appeler ces fonctions, nous devons connaître les types de données qu'elles attendent.
 
-=== Les types de données
+== Les types de données
 Comme _Typst_ est un langage de programmation, il permet de manipuler des données, et pour qu'on ne s'emmêle pas trop les pinceaux, il les traite différemment en fonction de ce qu'elles représentent.
 Voyons les principaux, ceux qu'on a besoin de connaître tout de suite :
 - *_bool_* : le type booléen. Ce type ne peut contenir que deux valeurs _true_ et _false_ (respectivement _vrai_ et _faux_).
 - *_int_* : le type entier. C'est un nombre sans valeur décimale. Il pourra servir pour des calculs.
 - *_string_* : la chaîne de caractère. Ce type contient des caractères(des lettres, des chiffres, ...), pour le reconnaitre, on entoure cette chaîne de guillemets (\"). Ce texte ne sera pas interprété par _Typst_.
-- *_content_*: du contenu. Cette fois-ci le texte de ce type sera interprété, il sera transformé en titre, en gras, ...
+- *_content_*: du contenu. Cette fois-ci le texte de ce type sera interprété, il sera transformé en titre, en gras, ... .
+- *_length_* : une mesure. On va surtout l'utiliser pour le style du document, la taille de police ... . Il y a plusieurs unités possibles :
+ - Points: 72pt
+ - Millimètres: 254mm
+ - Centimètres: 2.54cm
+ - Inches (Pouces): 1in
+ - Taille relative à la taille de police standard: 2.5em
+- *_relative_* : une taille relative à une autre(qui sera déduite de celle qu'on veut dimensionner), on l'exprimera en pourcentage.
 
+== Les fonctions
 
+Une fonction, c'est une portion de code qui attend des paramètres(nommés, avec leur type de données) en entrée et qui a une valeur de sortie dans un type de données également.
+Très souvent nos fonctions retourneront un _content_.
+Elle a un nom et une définition des paramètres en entrée, cet ensemble s'appelle une signature.
 
+Nous allons mainteant voir différents appels de fonction pour comprendre comment faire l'appel en fonction de la signature de la fonction.
+
+```typst
+// Avec un paramètre positionnel (ici de type string)
+#image("images/Ramen Photo Overleaf.jpg")
+```
+
+Les appels commencent par un *\#*.
+Ensuite, on a le nom de la fonction et suivant le cas, on va avoir des paramètres en entrée (on pourrait aussi ne pas en avoir).
+Par défaut, on va mettre les paramètres d'entrée entre parenthèses comme on peut le voir sur c premier exemple, on voit également que le paramètre attendu est de type _string_ car il a été écrit entre guillements(\").
+Enfin, on ne donne pas le nom du paramètre, c'est l'approche positionnelle. Le premier paramètre attendu est de type _string_. S'il y a d'autres paramètres, ils ont une valeur par défaut, ce qui nous permet de les ignorer.
+
+```typst
+// Deux paramètres positionnels de type content
+#list([A], [B])
+```
+Cette fois-ci, les deux premiers paramètres attendus sont des _content_, chacun d'entre eux est donc entre crochets(\[ \]).
+
+```typst
+// Un paramètre positionnel, un paramètre nommé
+#image("images/Ramen Photo.jpg", width: 70%)
+```
+On voit à nouveau notre fonction _image_. De toute évidence, elle peut recevoir d'autres paramètres (qui ont une valeur par défaut) et _width_ n'est probablement pas le deuxième paramètre.
+Plutôt que d'utiliser uniquement l'approche positionnelle, qui nous obligerait à renseigner tous les paramètres jusqu'à celui qui nous intéresse, on va utiliser l'approche nommée.
+En mettant _width :_ suivi de sa valeur (ici de type _relative_), on va viser précisément ce paramètre. Quant au premier, qui est obligatoire, il n'as pas de nom ici.
+
+```typst
+// Argument nommé et content
+#enum(start: 2)[A][B]
+```
+
+Maintenant, nous voyons un changement dans la syntaxe. _start_ est mis entre parenthèses, mais les deux _content_ suivants n'y sont pas.
+Quand les derniers paramètres d'une fonction sont des _content_, on peut les écrire après les parenthèses.
+
+```typst
+// Version sans parenthèses.
+#list[A][B]
+```
+Ici, on n'utilise même pas les parenthèses, car tous les paramètres sont optionnels à l'exception des derniers qui sont des _content_.
+A noter que c'est exactement le même appel que le premier exemple, mais avec une syntaxe plus légère.
+
+= Rédaction Avancée
 
 == Notes de bas de page
 Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
@@ -228,22 +292,11 @@ Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est par
 Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
 ```
 
-#feature[Fonctions][
-  Cette instruction introduit un nouveau concept, l'usage d'une *fonction* :
-    - *\#* signifie que l'on commence un bloc de code
-    - ensuite il y a le nom de la fonction appelée, ici _footnote_.
-    - on peut remarquer également qu'il y a une expression entre crochets (\[ et \]), le contenu des crochets est un type de données pour Typst qui s'appelle _content_.
-]
-
 L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombre de tâches:
 - Ecrire le texte de l'expression en bas de la page,
 - lui associer un label (que l'on ne connait pas),
 - poser une référence à l'emplacement de la fonction.
 
-#feature[Qu'est-ce que le type _content_ ?][
-  C'est un bloc de texte contenant des instructions, comme par exemple des mots avec emphase, des appels de fonction, etc...
-  L'expression sera évaluée, transformée. Elle n'est pas figée comme  une chaîne de caractères qui correspond au type _string_.
-]
 
 
 == Images et Figures
@@ -275,19 +328,6 @@ qui devient :
 La largeur spécifiée est proportionnelle à la largeur totale (70% de cette dernière), mais on aurait pu y écrire une mesure en _cm_ ou en _in_(inches).
 On constate également que notre image n'est pas centrée par défaut, elle s'aligne à gauche.
 
-#feature[Fonctions bis][
-  On utilise encore une *fonction* cette fois-ci, c'est la fonction _image_.
-    - entre parenthèses les paramètres qu'elle accepte. On peut remarquer également qu'il y a :
-     - un paramètre nommé _width_ qui est optionnel,
-     - le premier paramètre qui n'est pas nommé et qui n'est pas optionnel,
-     - enfin le premier paramètre reçoit une chaine de caractères, elle est donc entourée de guillemets.
-]
-
-#feature[Parenthèses ou crochets ?][
-  C'est à n'y rien comprendre pour _footnote_ on utilise des crochets, pour _image_ des parenthèses.
-    Les crochets sont utilisés quand le paramètre attendu est une expression, sinon on utilise des parenthèses.
-]
-
 === Figures
 
 Voyons maintenant comment inclure une image dans une figure :
@@ -317,36 +357,65 @@ On peut voir que :
 
 Le résultat est une figure avec un titre (_caption_) et un numéro séquentiel (chaque figure aura un numéro différent). On peut noter que j'ai également ajouté un label que lon peut référencer (@ramen).
 
-== Bibliographie
+== Les Tableaux
 
-Pour ajouter une bibliographie, il faut tout d'abord la rédiger. Pour cela, le format préféré de Typst est le format Hayagriva @hayagriva, mais vous pouvez également utiliser le format bib de LaTeX.
-J'ai donc préparé un fichier appelé bibliographie.yml et qui contient pour l'instant :
-
-```yaml
-ramen-source:
-  type: Web
-  title: White Scoop on White Ceramic Bowl
-  author: Quang Anh Ha Nguyen
-  url: https://www.pexels.com/photo/white-scoop-on-white-ceramic-bowl-884600/
-haragriva:
-  type: Web
-  title: Hayagriva
-  author: Typst
-  url: https://github.com/typst/hayagriva/blob/main/docs/file-format.md
-```
-
-A la fin de mon document, je vais mettre ma bibliographie :
+La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire un sirop de citron:
 
 ```typst
-#bibliography("bibliographie.yml")
+#table(
+  columns: 2,
+  [*Ingrédient*], [*Quantité*],
+  [Jus de Citron], [250ml],
+  [Eau], [500ml], [Sucre], [750g]
+)
 ```
 
-Et je peux ensuite utiliser les entrées de celle-ci comme référence :
+ce qui nous donne :
 
+#table(
+  columns: 2,
+  [*Ingrédient*], [*Quantité*],
+  [Jus de Citron], [250ml],
+  [Eau], [500ml], [Sucre], [750g]
+)
+
+On appelle la fonction _table_ avec un paramètre nommé _column_ (ici avec deux colonnes), suivi d'une liste d'éléments (séparés par des virgules) qu'il va placer dans les cellules du tableau.
+On peut les regrouper par ligne du tableau pour une meilleure lisibilité du code, mais ce n'est pas nécessaire comme le montre la dernière ligne.
+
+On peut également mettre notre tableau dans une figure, comme on l'a fait pour l'image :
+
+caption: [code],
 ```typst
-@hayagriva
+#figure(
+  table(
+    columns: 2,
+    [*Ingrédient*], [*Quantité*],
+    [Jus de Citron], [250ml],
+    [Eau], [500ml], [Sucre], [750g]
+  ),
+  caption: [Recette du sirop de Citron]
+)
 ```
-Pour qu'apparaisse un numéro de référence entre crochets référençant l'objet mentionné (livre, article, url, ...)
+
+nous donne le @sirop.
+
+#figure(
+  table(
+    columns: 2,
+    [*Ingrédient*], [*Quantité*],
+    [Jus de Citron], [250ml],
+    [Eau], [500ml], [Sucre], [750g]
+  ),
+  caption: [Recette du sirop de Citron]
+)<sirop>
+
+#feature[Titre de figure][
+ Ce qu'il est intéressant de noter, c'est que la fonction _figure_ fait la différence entre une image et un tableau :
+  - pour l'image on peut lire "Fig." suivi d'un numéro, de ". -" et de _caption_ ,
+  - pour le tableau "Tableau", suivi d'un numéro suivi de ". -" et de _caption_.
+  Elle fait également cette distinction pour le code.
+  Et comme elle fait cette distinction, elle utilise des compteurs séparés pour la numérotation.
+]
 
 == Formules Mathématiques
 
@@ -364,6 +433,43 @@ Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. 
 ```typst
 Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. $ S = pi r^2 $ Comme on peut le voir ici:
 ```
+
+
+== Bibliographie
+
+Pour ajouter une bibliographie, il faut tout d'abord la rédiger. Pour cela, le format préféré de Typst est le format Hayagriva @hayagriva, mais vous pouvez également utiliser le format bib de LaTeX.
+J'ai donc préparé un fichier appelé bibliographie.yml et qui contient pour l'instant :
+
+#figure(
+    caption: [bibliographie.yml],
+    ```yaml
+    ramen-source:
+      type: Web
+      title: White Scoop on White Ceramic Bowl
+      author: Quang Anh Ha Nguyen
+      url: https://www.pexels.com/photo/white-scoop-on-white-ceramic-bowl-884600/
+    haragriva:
+      type: Web
+      title: Hayagriva
+      author: Typst
+      url: https://github.com/typst/hayagriva/blob/main/docs/file-format.md
+    ```
+)
+
+A la fin de mon document, je vais afficher ma bibliographie :
+
+```typst
+#bibliography("bibliographie.yml")
+```
+
+Et je peux ensuite utiliser les entrées de celle-ci comme référence :
+
+```typst
+@hayagriva
+```
+Pour qu'apparaisse un numéro entre crochets référençant l'objet mentionné (livre, article, url, ...)
+
+
 
 = Mise en Page
 
