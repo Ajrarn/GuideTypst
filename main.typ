@@ -24,10 +24,15 @@
 #show: frame-style(styles.boxy)
 
 // --------------- Personnalisation du document
+#let title = "Guide Typst"
+#let author = "Christophe Dos Santos"
+#let description = "Un petit guide en français sur l'utilisation de Typst"
+
+
 #set document(
-  title: "Guide Typst",
-  author: "Christophe Dos Santos",
-  description: "Un petit guide en français sur l'utilisation de Typst",
+  title: title,
+  author: author,
+  description: description,
   keywords: ("Typst","Guide","Français")
 )
 
@@ -54,6 +59,19 @@
   body
 }
 
+// -------------- Page de Titre
+#align(center, text(17pt)[
+  *#title*
+])
+
+#align(center, text(13pt)[
+  *#description*
+])
+
+#align(center, text(13pt)[
+  *#author*
+])
+
 
 // --------------- Contenu
 = Présentation
@@ -72,20 +90,22 @@ Et comme tous les langages, il a sa propre syntaxe qui permet de décrire le doc
 C'est cette syntaxe que nous allons décrouvrir progressivement.
 
 Nous allons commencer par les concepts les plus simples, les quelque choses à savoir pour commencer à rédiger des documents.
+
 Mais avant cela, voyons un peu les outils que l'on trouve sur ce document.
 Commençons par un exemple de code :
 
 ```typst
 Nous allons commencer par les concepts les plus simples, les quelque choses à savoir pour commencer à rédiger des documents.
+
 Mais avant cela, voyons un peu les outils que l'on trouve sur ce document.
 Commençons par un exemple de code :
 ```
 
 Ce qu'il y a au dessus est un bloc de code qui sert à illuster la syntaxe.
-Je vais d'ailleurs faire souvent ce que l'on voit au-dessus, à savoir mettre le code dans la boîte de code et en dehors pour que lon puisse voir le résultat.
+Je vais d'ailleurs faire souvent ce que l'on voit au-dessus, à savoir mettre le code dans la boîte de code et en dehors pour que l'on puisse voir le résultat.
 Dans la boîte de code, celui-ci n'est pas interprété par le compilateur (le programme qui transforme le code en document), ainsi, on peut voir la syntaxe.
 On verra plus tard comment faire la même chose. Ce que l'on peut voir de la boîte, est qu'elle affiche à gauche le langage qui est mis en valeur et les lignes de code en alternance de couleurs.
-Pou éviter que cela déborde, on peut voir deux lignes de texte dans la première partie grise, mais en réalité, j'ai vraiment écrit une seule ligne. C'est la seule transformation autorisée ici.
+Pour éviter que cela déborde, on peut voir deux lignes de texte dans la première partie grise, mais en réalité, j'ai vraiment écrit une seule ligne. C'est la seule transformation autorisée ici.
 
 Le deuxième outil, ce sont aussi des boîtes de texte pour attirer ton attention, comme celle-ci :
 
@@ -95,7 +115,7 @@ Quand je penserai à faire remarquer un concept important, j'utiliserai ce genre
 
 J'ai choisi une approche plutôt didactique. On va découvrir les concepts du plus simple au plus compliqué.
 Du coup, les sujets risquent de s'entrecroiser.
-Je commence bien évidemment par les outils pour écrire le document, et cela restera le fil directeur, mais cela sera interrompu par des explcations conceptuelles qui devraient permettre de garder une bonne compéhension.
+Je commence bien évidemment par les outils pour écrire le document, et cela restera le fil directeur, mais cela sera interrompu par des explications conceptuelles qui devraient permettre de garder une bonne compréhension.
 
 = Les bases de la Rédaction
 
@@ -306,7 +326,7 @@ On commence par insérer simplement une image.
 J'utilise une image libre de droits @ramen-source
 
 ```typst
-#image("images/Ramen Photo Overleaf.jpg")
+#image("images/Ramen Photo.jpg")
 ```
 
 qui devient :
@@ -338,7 +358,7 @@ Voyons maintenant comment inclure une image dans une figure :
   caption: [
     les _Ramen_, un incontournable de la cuisine japonaise.
   ]
-)
+)<ramen>
 ```
 
 On peut voir que :
@@ -509,6 +529,11 @@ Ce qui fait qu'à chaque fois que Typst fait appel à la fonction _text_, il app
   - ...
 ]
 
+#feature[Est-ce qu'on peut modifier ainsi tous les paramètres de ces fonctions ?][
+Non. Mais pour connaître ceux que l'on peut manipuler, il faut aller voir la documentation, comme ici @ref-document.
+Ceux pour lesquels on voit l'attribut settable sont modifiables
+]
+
 Voici les autres réglages appliqués à ce document :
 ```typst
 #set page(
@@ -536,13 +561,12 @@ la fonction document a les paramètres suivants :
   table.header(
     [*Propriété*], [*Valeurs acceptées*], [*Valeur par défaut*],
   ),
-  [*title*], [_none_ ou _expression_], [_none_],
-  [*author*], [chaîne ou tableau de chaîne], [()],
-  [*description*], [_none_ ou _expression_], [_none_],
-  [*keywords*], [chaîne ou tableau de chaîne], [()],
+  [*title*], [_none_ ou _content_], [_none_],
+  [*author*], [_string_ ou _array_], [()],
+  [*description*], [_none_ ou _content_], [_none_],
+  [*keywords*], [_string_ ou _array_], [()],
   [*title*], [_none_ ou _auto_ ou _datetime_], [_auto_],
 )
-
 
 que l'on peut définir comme on l'a vu :
 
@@ -555,6 +579,10 @@ que l'on peut définir comme on l'a vu :
 )
 ```
 
+#feature[_array_ ?][
+On peut voir ici un nouveau type de données, le type _array_. C'est une liste d'un type de données particulier, ici notre liste contiendra des _string_.
+On peut voir la syntaxe permettant de définir une liste pour le paramètre _keywords_. La liste est définie par des parenthèse contenant ses éléments séparés par des virgules.
+]
 
 
 #bibliography("bibliographie.yml")

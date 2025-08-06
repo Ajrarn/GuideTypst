@@ -8,6 +8,11 @@ hayagriva:
   title: Hayagriva
   author: Typst
   url: https://github.com/typst/hayagriva/blob/main/docs/file-format.md
+ref-document:
+  type: Web
+  title: Référence Fonction document
+  author: Typst
+  url: https://typst.app/docs/reference/model/document/
   
   
 
