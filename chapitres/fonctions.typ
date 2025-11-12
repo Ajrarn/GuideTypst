@@ -24,7 +24,7 @@ Une fonction, c'est une portion de code qui attend des paramètres(nommés, avec
 Très souvent nos fonctions retourneront un _content_.
 Elle a un nom et une définition des paramètres en entrée, cet ensemble s'appelle une signature.
 
-Nous allons mainteant voir différents appels de fonction pour comprendre comment faire l'appel en fonction de la signature de la fonction.
+Nous allons maintenant voir différents appels de fonction pour comprendre comment faire l'appel en fonction de la signature de la fonction.
 
 ```typst
 // Avec un paramètre positionnel (ici de type string)
@@ -33,7 +33,7 @@ Nous allons mainteant voir différents appels de fonction pour comprendre commen
 
 Les appels commencent par un *\#*.
 Ensuite, on a le nom de la fonction et suivant le cas, on va avoir des paramètres en entrée (on pourrait aussi ne pas en avoir).
-Par défaut, on va mettre les paramètres d'entrée entre parenthèses comme on peut le voir sur c premier exemple, on voit également que le paramètre attendu est de type _string_ car il a été écrit entre guillements(\").
+Par défaut, on va mettre les paramètres d'entrée entre parenthèses comme on peut le voir sur ce premier exemple, on voit également que le paramètre attendu est de type _string_ car il a été écrit entre guillemets(\").
 Enfin, on ne donne pas le nom du paramètre, c'est l'approche positionnelle. Le premier paramètre attendu est de type _string_. S'il y a d'autres paramètres, ils ont une valeur par défaut, ce qui nous permet de les ignorer.
 
 ```typst
@@ -48,7 +48,7 @@ Cette fois-ci, les deux premiers paramètres attendus sont des _content_, chacun
 ```
 On voit à nouveau notre fonction _image_. De toute évidence, elle peut recevoir d'autres paramètres (qui ont une valeur par défaut) et _width_ n'est probablement pas le deuxième paramètre.
 Plutôt que d'utiliser uniquement l'approche positionnelle, qui nous obligerait à renseigner tous les paramètres jusqu'à celui qui nous intéresse, on va utiliser l'approche nommée.
-En mettant _width :_ suivi de sa valeur (ici de type _relative_), on va viser précisément ce paramètre. Quant au premier, qui est obligatoire, il n'as pas de nom ici.
+En mettant _width :_ suivi de sa valeur (ici de type _relative_), on va viser précisément ce paramètre. Quant au premier, qui est obligatoire, on ne le nomme pas explicitement quand on appelle la fonction.
 
 ```typst
 // Argument nommé et content

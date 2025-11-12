@@ -12,7 +12,7 @@ Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est par
 L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombre de tâches:
 - Ecrire le texte de l'expression en bas de la page,
 - lui associer un label (que l'on ne connait pas),
-- poser une référence à l'emplacement de la fonction.
+- poser une référence à l'emplacement de la fonction. C'est le 1 en indice, il est cliquable et nous renvoie à la note de bas de page.
 
 
 
@@ -23,7 +23,7 @@ On commence par insérer simplement une image.
 J'utilise une image libre de droits @ramen-source
 
 ```typst
-#image("images/Ramen Photo.jpg")
+#image("../images/Ramen Photo.jpg")
 ```
 
 qui devient :
@@ -36,7 +36,7 @@ Le texte que j'ai mis pour désigner l'image est un chemin relatif au fichier so
 On peut restreindre la largeur en ajoutant un deuxième paramètre :
 
 ```typst
-#image("images/Ramen Photo.jpg", width: 70%)
+#image("../images/Ramen Photo.jpg", width: 70%)
 ```
 qui devient :
 
@@ -51,7 +51,7 @@ Voyons maintenant comment inclure une image dans une figure :
 
 ```typst
 #figure(
-  image("images/Ramen Photo.jpg", width: 70%),
+  image("../images/Ramen Photo.jpg", width: 70%),
   caption: [
     les _Ramen_, un incontournable de la cuisine japonaise.
   ]

@@ -7,12 +7,13 @@ Dans cette première partie, nous n'allons voir que la syntaxe la plus simple, c
 == Les titres
 === sous-titres
 
-Un bon document est un document structuré, avec un plan, et cela commence par avoir des titre à des niveaux différents.
+Un bon document est un document structuré, avec un plan, et cela commence par avoir des titres à des niveaux différents.
 
 ```typst
 = Les bases de la Rédaction
 ...
 == Les titres
+=== sous-titres
 ```
 
 Ce code correspond aux premiers éléments de ce plan, sans le texte que j'ai remplacé par ... .
