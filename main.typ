@@ -8,9 +8,6 @@
     ("Typst","Guide","Français")
 )
 
-#import "utils.typ": feature, example, variant, syntax
-
-
 // --------------- Contenu
 #include "./chapitres/presentation.typ"
 #include "./chapitres/redaction.typ"
