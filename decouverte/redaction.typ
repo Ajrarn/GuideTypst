@@ -1,19 +1,19 @@
 #import "../utils.typ": feature
-= Les bases de la Rédaction
+== Les bases de la Rédaction
 
 Le plus important dans le document, c'est sa structure et son contenu. Nous allons donc commencer par cela.
 Dans cette première partie, nous n'allons voir que la syntaxe la plus simple, celle qui ne nécessite pas beaucoup d'explications.
 
-== Les titres
-=== sous-titres
+=== Les titres
+==== sous-titres
 
 Un bon document est un document structuré, avec un plan, et cela commence par avoir des titres à des niveaux différents.
 
 ```typst
 = Les bases de la Rédaction
 ...
-== Les titres
-=== sous-titres
+=== Les titres
+==== sous-titres
 ```
 
 Ce code correspond aux premiers éléments de ce plan, sans le texte que j'ai remplacé par ... .
@@ -27,14 +27,14 @@ Je décris la structure de mon document, je ne m'amuse pas à numéroter tous le
 Je fais confiance à _Typst_ pour appliquer la numérotation suivant une règle que je lui donnerais.
 ]
 
-== Les Paragraphes
+=== Les Paragraphes
 
 Un simple texte sans saut de ligne apparait comme un paragraphe.
 Le texte est par défaut en mode justifié, c'est à dire qu'il constitue un seul bloc qui prend toute la largeur disponible, aligné à gauche et à droite.
 
 Il suffit d'insérer une ligne vide pour écrire un nouveau paragraphe. On peut aller à la ligne entre les phrases de notre paragraphe, mais c'est vraiment la ligne vide qui fait la séparation.
 
-== L'Emphase - Valoriser le texte
+=== L'Emphase - Valoriser le texte
 Il existe deux niveaux d'emphase(valorisation du texte), qui par défaut seront:
 - _italique_
 - *gras*
@@ -46,10 +46,10 @@ Pour appliquer ces niveaux d'emphase, on va utiliser cela :
 ```
 Du texte entouré d'underscore(\_) pour le premier niveau, du texte entouré d'astérisques(\*) pour le niveau supérieur.
 
-== Les listes
+=== Les listes
 On peut aussi utiliser des listes pour séparer des idées.
 
-=== Sans numérotation
+==== Sans numérotation
 
 La liste sans numérotation se fait en commençant une ligne par un tiret(\-):
 ```typst
@@ -62,7 +62,7 @@ qui devient :
 - premier item
 - deuxième item
 
-=== Avec numérotation
+==== Avec numérotation
 
 Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
 ```typst
@@ -75,7 +75,7 @@ qui devient :
 + premier item
 + deuxième item
 
-=== Listes imbriquées
+==== Listes imbriquées
 
 Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser, soit une tabulation, soit des espaces(essayez d'avoir le même nombre pour tous les éléments d'un même niveau).
 
@@ -98,7 +98,7 @@ qui devient :
  + deuxième enfant du premier parent
 
 
-== Labels et références<labelsReferences>
+=== Labels et références<labelsReferences>
 
 Dans notre texte, on peut faire mention d'une partie du document, d'une figure, d'un annexe, d'un élément de bibliographie, etc.
 Pour ce faire, nous allons avoir besoin d'un moyen de référencer ces éléments, ainsi qu'un moyen d'y accéder.

@@ -1,10 +1,10 @@
-#import "../utils.typ": feature
+#import "../utils.typ": feature,LaTeX
 
-= Présentation
+== Présentation
 
 Typst est un traitement de texte, mais pas un de ceux que l'on connait habituellement.
 Tout le monde connaît les traitements de texte _Wysiwig_ (What You See Is What You Get : Ce que vous voyez est ce que vous obtenez) comme _Word_, _Writer_, _Pages_.
-Mais il existe une autre approche: _Wysiwym_ (What You See Is What You Mean : Ce que vous voyez est ce que vous voulez dire) dont le plus connu dans le monde universitaire et scientifique est LaTeX.
+Mais il existe une autre approche: _Wysiwym_ (What You See Is What You Mean : Ce que vous voyez est ce que vous voulez dire) dont le plus connu dans le monde universitaire et scientifique est #LaTeX.
 
 
 Typst est également un langage de programmation un peu particulier. Il ne permet pas de créer un programme, mais un document dans l'un des formats suivants :

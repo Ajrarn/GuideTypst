@@ -1,9 +1,9 @@
 #import "../utils.typ": feature
-= Introduction aux fonctions
+== Introduction aux fonctions
 Pour aller un peu plus loin, on va devoir évoquer les fonctions et les types de données. En effet, on va devoir utiliser des fonctions pour insérer des images, mettre des notes de bas de page, ... .
 Et pour comprendre comment appeler ces fonctions, nous devons connaître les types de données qu'elles attendent.
 
-== Les types de données
+=== Les types de données
 Comme _Typst_ est un langage de programmation, il permet de manipuler des données, et pour qu'on ne s'emmêle pas trop les pinceaux, il les traite différemment en fonction de ce qu'elles représentent.
 Voyons les principaux, ceux qu'on a besoin de connaître tout de suite :
 - *_bool_* : le type booléen. Ce type ne peut contenir que deux valeurs _true_ et _false_ (respectivement _vrai_ et _faux_).
@@ -18,7 +18,7 @@ Voyons les principaux, ceux qu'on a besoin de connaître tout de suite :
  - Taille relative à la taille de police standard: 2.5em
 - *_relative_* : une taille relative à une autre(qui sera déduite de celle qu'on veut dimensionner), on l'exprimera en pourcentage.
 
-== Les fonctions
+=== Les fonctions
 
 Une fonction, c'est une portion de code qui attend des paramètres(nommés, avec leur type de données) en entrée et qui a une valeur de sortie dans un type de données également.
 Très souvent nos fonctions retourneront un _content_.

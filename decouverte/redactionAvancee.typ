@@ -1,8 +1,8 @@
 #import "../utils.typ": feature
 
-= Rédaction Avancée
+== Rédaction Avancée
 
-== Notes de bas de page
+=== Notes de bas de page
 Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :
 
 ```typst
@@ -16,9 +16,9 @@ L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombr
 
 
 
-== Images et Figures
+=== Images et Figures
 
-=== Images
+==== Images
 On commence par insérer simplement une image.
 J'utilise une image libre de droits @ramen-source
 
@@ -45,7 +45,7 @@ qui devient :
 La largeur spécifiée est proportionnelle à la largeur totale (70% de cette dernière), mais on aurait pu y écrire une mesure en _cm_ ou en _in_(inches).
 On constate également que notre image n'est pas centrée par défaut, elle s'aligne à gauche.
 
-=== Figures
+==== Figures
 
 Voyons maintenant comment inclure une image dans une figure :
 
@@ -74,7 +74,7 @@ On peut voir que :
 
 Le résultat est une figure avec un titre (_caption_) et un numéro séquentiel (chaque figure aura un numéro différent). On peut noter que j'ai également ajouté un label que lon peut référencer (@ramen).
 
-== Les Tableaux
+=== Les Tableaux
 
 La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire un sirop de citron:
 
@@ -134,7 +134,7 @@ nous donne le @sirop.
   Et comme elle fait cette distinction, elle utilise des compteurs séparés pour la numérotation.
 ]
 
-== Formules Mathématiques
+=== Formules Mathématiques
 
 A l'instar de LaTeX, Typst permet de rédiger et de mettre en valeur des formules mathématiques.
 
@@ -152,7 +152,7 @@ Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. 
 ```
 
 
-== Bibliographie
+=== Bibliographie
 
 Pour ajouter une bibliographie, il faut tout d'abord la rédiger. Pour cela, le format préféré de Typst est le format Hayagriva @hayagriva, mais vous pouvez également utiliser le format bib de LaTeX.
 J'ai donc préparé un fichier appelé bibliographie.yml et qui contient pour l'instant :
