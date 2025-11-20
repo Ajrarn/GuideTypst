@@ -1,4 +1,5 @@
-name: Build Typst document
+name: Build Typst document and Release
+
 on:
   push:
     branches:
@@ -8,25 +9,82 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  build-and-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Typst
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read current version
+        id: read_version
+        run: |
+          if [ -f VERSION ]; then
+            CURRENT_VERSION=$(cat VERSION)
+          else
+            CURRENT_VERSION="0.0.0"
+            echo "$CURRENT_VERSION" > VERSION
+          fi
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Current version: $CURRENT_VERSION"
+
+      - name: Increment version
+        id: increment_version
+        run: |
+          VERSION=${{ steps.read_version.outputs.current_version }}
+          IFS='.' read -r -a parts <<< "$VERSION"
+          MAJOR="${parts[0]}"
+          MINOR="${parts[1]}"
+          PATCH="${parts[2]}"
+          
+          # Incrémenter le patch
+          PATCH=$((PATCH + 1))
+          
+          NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+          echo "$NEW_VERSION" > VERSION
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New version: $NEW_VERSION"
+
+      - name: Commit version bump
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add VERSION
+          git diff --staged --quiet || git commit -m "chore: bump version to ${{ steps.increment_version.outputs.new_version }} [skip ci]"
+          git push
+
+      - name: Build Typst document
         uses: lvignoli/typst-action@v0
         with:
-          source_file: guideTypst.typ
-      - name: Upload PDF file
-        uses: actions/upload-artifact@v5.0.0
-        with:
-          name: PDFs
-          path: guideTypst.pdf
+          source_file: main.typ
+
+      - name: Rename PDF with version
+        run: |
+          mv main.pdf guideTypst-v${{ steps.increment_version.outputs.new_version }}.pdf
+
       - name: Get current date
         id: date
-        run: echo "DATE=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_ENV
-      - name: Release
+        run: echo "date=$(date +%Y-%m-%d-%H:%M)" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag
+        run: |
+          git tag "v${{ steps.increment_version.outputs.new_version }}"
+          git push origin "v${{ steps.increment_version.outputs.new_version }}"
+
+      - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          name: "${{ github.ref_name }} — ${{ env.DATE }}"
+          tag_name: "v${{ steps.increment_version.outputs.new_version }}"
+          name: "Release v${{ steps.increment_version.outputs.new_version }} — ${{ steps.date.outputs.date }}"
           files: "*.pdf"
+          body: |
+            ## Version ${{ steps.increment_version.outputs.new_version }}
+            
+            Build automatique du document Typst.
+            
+            **Date:** ${{ steps.date.outputs.date }}
+            **Commit:** ${{ github.sha }}
+          draft: false
+          prerelease: false
