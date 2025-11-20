@@ -74,6 +74,36 @@
   pagebreak(to: "odd", weak: true)
   v(2cm)
 
+  // Personnalisation des références pour avoir la page ou se trouve le label
+    show ref: it => context {
+      if it.element != none and it.element.func() == figure {
+        let current-page = here().page()
+        let target-page = it.element.location().page()
+        let diff = target-page - current-page
+
+        let page-info = if diff == 0 {
+          // Même page : pas d'indication
+          none
+        } else if calc.abs(diff) == 1 and calc.rem(calc.min(current-page, target-page), 2) == 1 {
+          // Pages adjacentes sur la même double-page (impaire-paire)
+          [, page ci-contre]
+        } else if diff == 1 {
+          // Page suivante (mais pas même double-page)
+          [, page suivante]
+        } else if diff == -1 {
+          // Page précédente (mais pas même double-page)
+          [, page précédente]
+        } else {
+          // Écart plus grand
+          [, page #target-page]
+        }
+
+        [#it#page-info]
+      } else {
+        it
+      }
+    }
+
   if it.numbering != none {
     // Utiliser context ici aussi
     context {
