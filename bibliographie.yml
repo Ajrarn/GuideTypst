@@ -13,8 +13,15 @@ ref-document:
   title: Référence Fonction document
   author: Typst
   url: https://typst.app/docs/reference/model/document/
-  
-  
-
-
-
+typst-app:
+  type: web
+  title: typst
+  url: https://typst.app/
+typst:
+  type: Web
+  title: projet github de typst
+  url: https://github.com/typst/typst
+universe:
+  type: Web
+  title: Typst Universe
+  url: https://typst.app/universe/

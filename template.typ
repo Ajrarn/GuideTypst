@@ -8,6 +8,9 @@
     motsCles,
     body) = {
 
+  // Très important, informer Typst que notre document est en français
+  set text(lang: "fr")
+
   // Codly
   import "@preview/codly:1.3.0": *
   import "@preview/codly-languages:0.1.1": *
@@ -43,8 +46,11 @@
 
   set par(
     justify: true,
+    first-line-indent: (amount: 2em, all: true),
     leading: 0.52em,
   )
+
+
 
   set heading(numbering: (..nums) => {
     let nums = nums.pos()
@@ -71,72 +77,88 @@
   }
 
   show heading.where(level: 2): it => {
-  pagebreak(to: "odd", weak: true)
-  v(2cm)
+    pagebreak(to: "odd", weak: true)
+    v(2cm)
+
+    if it.numbering != none {
+      // Utiliser context ici aussi
+      context {
+        let counts = counter(heading).at(here())
+        if counts.len() >= 2 {
+          align(center)[
+            #text(size: 14pt)[Chapitre #counts.at(1)]
+            #v(1.5em)
+            #text(size: 18pt, weight: "bold")[#it.body]
+          ]
+        }
+      }
+    } else {
+      align(center)[
+        #text(size: 18pt, weight: "bold")[#it.body]
+      ]
+    }
+
+    v(2cm)
+  }
 
   // Personnalisation des références pour avoir la page ou se trouve le label
-    show ref: it => context {
-      if it.element != none and it.element.func() == figure {
-        let current-page = here().page()
-        let target-page = it.element.location().page()
-        let diff = target-page - current-page
+  show ref: it => context {
+    if it.element != none {
+      let current-page = here().page()
+      let target-page = it.element.location().page()
+      let diff = target-page - current-page
 
-        let page-info = if diff == 0 {
+      let page-info = if diff == 0 {
           // Même page : pas d'indication
           none
-        } else if calc.abs(diff) == 1 and calc.rem(calc.min(current-page, target-page), 2) == 1 {
-          // Pages adjacentes sur la même double-page (impaire-paire)
-          [, page ci-contre]
         } else if diff == 1 {
-          // Page suivante (mais pas même double-page)
-          [, page suivante]
+          if calc.rem(current-page,2) == 0 {
+            [, page ci-contre]
+          } else {
+            // Page suivante (mais pas même double-page)
+            [, page suivante]
+          }
         } else if diff == -1 {
-          // Page précédente (mais pas même double-page)
-          [, page précédente]
+          if calc.rem(current-page,2) == 1 {
+            [, page ci-contre]
+          } else {
+            // Page précédente (mais pas même double-page)
+            [, page précédente]
+          }
         } else {
           // Écart plus grand
           [, page #target-page]
         }
 
-        [#it#page-info]
-      } else {
-        it
-      }
+      [#it#page-info]
+    } else {
+      it
     }
-
-  if it.numbering != none {
-    // Utiliser context ici aussi
-    context {
-      let counts = counter(heading).at(here())
-      if counts.len() >= 2 {
-        align(center)[
-          #text(size: 14pt)[Chapitre #counts.at(1)]
-          #v(1.5em)
-          #text(size: 18pt, weight: "bold")[#it.body]
-        ]
-      }
-    }
-  } else {
-    align(center)[
-      #text(size: 18pt, weight: "bold")[#it.body]
-    ]
   }
 
-  v(2cm)
-}
+  // List style
+  set list(indent: 3em)
 
   // -------------- Page de Titre
-  align(center, text(17pt)[
-    *#titre*
-  ])
+  page(margin: (top: 35mm, bottom: 33mm, left: 2cm, right: 2cm))[
+      #set text(size: 20pt)
 
-  align(center, text(13pt)[
-    *#description*
-  ])
+      #align(center)[
 
-  align(center, text(13pt)[
-    *#auteur*
-  ])
+        #v(1fr)
+        #text(size: 1.5em)[
+          #titre
+        ]
+
+        #v(1fr)
+
+        #description
+
+        #v(1fr)
+
+        #auteur
+    ]
+  ]
 
   body
 }
