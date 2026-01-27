@@ -33,7 +33,7 @@
 // logo typst
 #let typst(size: none) = {
   let content = text(
-    font: "Linux Libertine O",
+    font: "Linux Libertine",
     fill: rgb("#239dad"),
     weight: "semibold",
     [typst]
