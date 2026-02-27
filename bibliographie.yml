@@ -25,3 +25,11 @@ universe:
   type: Web
   title: Typst Universe
   url: https://typst.app/universe/
+typst-documentation:
+  type: Web
+  title: Documentation de Typst
+  url: https://typst.app/docs/
+typs-doc-text:
+  type: Web
+  title: Documentation de text
+  url: https://typst.app/docs/reference/text/text/

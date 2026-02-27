@@ -33,7 +33,7 @@
 // logo typst
 #let typst(size: none) = {
   let content = text(
-    font: "Linux Libertine O",
+    font: "Linux Libertine",
     fill: rgb("#239dad"),
     weight: "semibold",
     [typst]
@@ -51,3 +51,8 @@
 
 // Constante pour Œ majuscule
 #let OE = [Œ]
+
+// Mise en valeur des exemples
+#let exemple(body) = {
+  text(fill:olive,body)
+}

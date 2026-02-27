@@ -1,4 +1,4 @@
-#import "../utils.typ": feature,warning,typst, LaTeX
+#import "../utils.typ": feature,warning,typst, LaTeX, exemple
 
 
 == L'outillage de base
@@ -62,8 +62,11 @@ La liste sans numérotation se fait en commençant une ligne par un tiret(\-):
 
 qui devient :
 
+#exemple[
 - premier item
-- deuxième item
+- deuxième item 
+]
+
 
 ==== Avec numérotation
 
@@ -75,8 +78,10 @@ Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
 
 qui devient :
 
+#exemple[
 + premier item
 + deuxième item
+]
 
 ==== Listes imbriquées
 
@@ -93,19 +98,20 @@ Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser,
 
 qui devient :
 
+#exemple[
 - premier parent
     - premier enfant du premier parent
     - deuxième enfant du premier parent
 - deuxième parent
  + premier enfant du premier parent
  + deuxième enfant du premier parent
-
+]
 
 === Labels et références<labelsReferences>
 
 Dans notre texte, on peut faire mention d'une partie du document, d'une figure, d'un annexe, d'un élément de bibliographie, etc.
 Pour ce faire, nous allons avoir besoin d'un moyen de poser une référence et un moyen d'utiliser cette référence.
-J'ai justement utilisé cette technique pour référencer le titre de ce chapitre (cf. @labelsReferences). Voici le code :
+#exemple[J'ai justement utilisé cette technique pour référencer le titre de ce chapitre (cf. @labelsReferences)]. Voici le code :
 
 ```typst
 == Labels et références<labelsReferences>
@@ -262,14 +268,14 @@ nous donne le @sirop.
 
 A l'instar de #LaTeX, #typst() permet de rédiger et de mettre en valeur des formules mathématiques.
 
-Mettons par exemple la formule de la surface d'un cercle $S = pi r^2$ :
+#exemple[Mettons par exemple la formule de la surface d'un cercle $S = pi r^2$ :]
 
 ```typst
 Mettons par exemple la formule de la surface d'un cercle $S = pi r^2$ :
 ```
 
 Dans cet exemple, la formule est appliquée en ligne, elle fait partie du paragraphe en cours.
-Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. $ S = pi r^2 $ Comme on peut le voir ici :
+#exemple[Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. $ S = pi r^2 $ Comme on peut le voir ici :]
 
 ```typst
 Si on veut la séparer, il suffit d'encadrer la formule d'espaces entre les \$. $ S = pi r^2 $ Comme on peut le voir ici:
@@ -321,5 +327,5 @@ Pour qu'apparaisse un numéro entre crochets référençant l'objet mentionné (
 
 J'ai repris ici ce qui m'a permis d'afficher le bloc de code concernant la bibliographie. Donc, avant le texte que je veux afficher comme comme code, il y a une première ligne avec trois backticks (\`) suivi du nom du langage et après, on ferme le bloc avec trois backticks.
 
-#feature[codly][Par défaut les blocs de code ne s'affichent pas comme vous le voyez ici. J'utilise un package appelé _codly_ qui permet d'améliorer l'affichage des blocs de code avec notamment la petite pastille à droite pour indiquer le langage. Je vous explique un peu plus loin comment utiliser ce package.]
+#feature[codly][Par défaut les blocs de code ne s'affichent pas comme vous le voyez ici. J'utilise un package appelé _codly_ qui permet d'améliorer l'affichage des blocs de code avec notamment la petite pastille à droite pour indiquer le langage. Je vous explique un peu plus loin comment utiliser ce package (cf. @codly).]
 
