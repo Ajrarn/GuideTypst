@@ -51,3 +51,8 @@
 
 // Constante pour Œ majuscule
 #let OE = [Œ]
+
+// Mise en valeur des exemples
+#let exemple(body) = {
+  text(fill:olive,body)
+}

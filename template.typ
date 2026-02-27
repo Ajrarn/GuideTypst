@@ -8,9 +8,6 @@
     motsCles,
     body) = {
 
-  // Très important, informer Typst que notre document est en français
-  set text(lang: "fr")
-
   // Codly
   import "@preview/codly:1.3.0": *
   import "@preview/codly-languages:0.1.1": *
@@ -49,8 +46,6 @@
     first-line-indent: (amount: 2em, all: true),
     leading: 0.52em,
   )
-
-
 
   set heading(numbering: (..nums) => {
     let nums = nums.pos()

@@ -16,6 +16,7 @@
       depth: 4,
       title: none
     )
+    #include "presentation.typ"
   ]
 )
 
@@ -25,7 +26,7 @@
     #text(size: 12pt, style: "italic")["Le commencement est la partie la plus importante du travail." — Platon]
   ]
 )
-#include "decouverte/presentation.typ"
+
 #include "decouverte/redaction.typ"
 #include "decouverte/packages.typ"
 

@@ -8,7 +8,7 @@ Mais il offre bien plus que cela. En effet, comme nous le verrons par la suite, 
 
 Tous ces packages de la communauté sont disponibles sur Typst Universe @universe
 
-=== Exemple détaillé
+=== Exemple détaillé<codly>
 
 Par exemple, pour afficher le code source, j'ai utilisé un package appelé codly, et pour ce faire en respectant la documentation du package #footnote[que vous retrouverez grâce à Typst Universe @universe], j'ai ajouté les lignes suivantes :
 
