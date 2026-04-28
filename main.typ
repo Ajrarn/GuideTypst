@@ -16,9 +16,16 @@
       depth: 4,
       title: none
     )
-    #include "presentation.typ"
   ]
 )
+
+#partie("Introduction",
+  complement: [
+    #text(size: 12pt, style: "italic")["Le commencement est la partie la plus importante du travail." — Platon]
+  ]
+)
+
+#include "introduction/presentation.typ"
 
 #partie(
   "Dans le petit bassin",
@@ -27,7 +34,7 @@
   ]
 )
 
-#include "decouverte/redaction.typ"
+#include "decouverte/decouverte.typ"
 #include "decouverte/packages.typ"
 
 #partie(

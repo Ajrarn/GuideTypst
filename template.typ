@@ -47,7 +47,14 @@
     leading: 0.52em,
   )
 
-  set heading(numbering: (..nums) => {
+  set heading(numbering: (..nums,
+    supplement: it => {
+      let level = it.depth
+      if level == 1 { [Partie] }
+      else if level == 2 { [Chapitre] }
+      else if level == 3 { [Section] }
+      else { [Sous-section] }
+    }) => {
     let nums = nums.pos()
     if nums.len() == 1 {
       // Niveau 1 = parties (numérotation en chiffres romains)
@@ -72,7 +79,7 @@
   }
 
   show heading.where(level: 2): it => {
-    pagebreak(to: "odd", weak: true)
+    pagebreak(weak: true)
     v(2cm)
 
     if it.numbering != none {
@@ -97,39 +104,95 @@
   }
 
   // Personnalisation des références pour avoir la page ou se trouve le label
+  // show ref: it => context {
+  //   if it.element != none {
+  //     let current-page = here().page()
+  //     let target-page = it.element.location().page()
+  //     let diff = target-page - current-page
+
+  //     let page-info = if diff == 0 {
+  //         // Même page : pas d'indication
+  //         none
+  //       } else if diff == 1 {
+  //         if calc.rem(current-page,2) == 0 {
+  //           [, page ci-contre]
+  //         } else {
+  //           // Page suivante (mais pas même double-page)
+  //           [, page suivante]
+  //         }
+  //       } else if diff == -1 {
+  //         if calc.rem(current-page,2) == 1 {
+  //           [, page ci-contre]
+  //         } else {
+  //           // Page précédente (mais pas même double-page)
+  //           [, page précédente]
+  //         }
+  //       } else {
+  //         // Écart plus grand
+  //         [, page #target-page]
+  //       }
+
+  //     [#it#page-info]
+  //   } else {
+  //     it
+  //   }
+  // }
   show ref: it => context {
-    if it.element != none {
-      let current-page = here().page()
-      let target-page = it.element.location().page()
-      let diff = target-page - current-page
+  if it.element != none and it.element.func() == heading {
+    let h = it.element
+    let nums = counter(heading).at(h.location())
+    let level = h.depth
 
-      let page-info = if diff == 0 {
-          // Même page : pas d'indication
-          none
-        } else if diff == 1 {
-          if calc.rem(current-page,2) == 0 {
-            [, page ci-contre]
-          } else {
-            // Page suivante (mais pas même double-page)
-            [, page suivante]
-          }
-        } else if diff == -1 {
-          if calc.rem(current-page,2) == 1 {
-            [, page ci-contre]
-          } else {
-            // Page précédente (mais pas même double-page)
-            [, page précédente]
-          }
-        } else {
-          // Écart plus grand
-          [, page #target-page]
-        }
-
-      [#it#page-info]
+    let num-str = if level == 1 {
+      numbering("I", nums.at(0))
+    } else if level == 2 {
+      numbering("1", nums.at(1))
+    } else if level == 3 {
+      numbering("1.1", nums.at(1), nums.at(2))
     } else {
-      it
+      numbering("1.1.1", ..nums.slice(1))
     }
+
+    let supplement = if level == 1 { [Partie] }
+      else if level == 2 { [Chapitre] }
+      else if level == 3 { [Section] }
+      else { [Sous-section] }
+
+    let current-page = here().page()
+    let target-page = h.location().page()
+    let diff = target-page - current-page
+    let page-info = if diff == 0 {
+        none
+      } else if diff == 1 {
+        if calc.rem(current-page, 2) == 0 { [, page ci-contre] }
+        else { [, page suivante] }
+      } else if diff == -1 {
+        if calc.rem(current-page, 2) == 1 { [, page ci-contre] }
+        else { [, page précédente] }
+      } else {
+        [, page #target-page]
+      }
+
+    [#supplement~#num-str#page-info]
+
+  } else if it.element != none {
+    // Référence non-heading : comportement original
+    let current-page = here().page()
+    let target-page = it.element.location().page()
+    let diff = target-page - current-page
+    let page-info = if diff == 0 { none }
+      else if diff == 1 {
+        if calc.rem(current-page, 2) == 0 { [, page ci-contre] }
+        else { [, page suivante] }
+      } else if diff == -1 {
+        if calc.rem(current-page, 2) == 1 { [, page ci-contre] }
+        else { [, page précédente] }
+      } else { [, page #target-page] }
+    [#it#page-info]
+  } else {
+    it
   }
+}
 
   // List style
   set list(indent: 3em)
