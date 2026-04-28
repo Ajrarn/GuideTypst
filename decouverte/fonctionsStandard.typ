@@ -3,7 +3,9 @@
 == Fonctions standard
 La syntaxe _Markup_ ne suffit pas pour produire des documents riches. Dans ce chapitre, nous allons détailler les fonctions standard usuelles, celles que tout le monde doit connaître.
 
-Avant tout, nous allons devoir appeler des fonctions en leur passant des paramètres. Parfois, ces paramètres sont transmis entre parenthèses, parfois entre crochets, parfois on va nommer le paramètre et parfois pas. Pour s'y retrouver
+Avant tout, nous allons devoir appeler des fonctions en leur passant des paramètres. Parfois, ces paramètres sont transmis entre parenthèses, parfois entre crochets, parfois on va nommer le paramètre et parfois pas.
+
+Pour l'instant, je n'entrerais pas dans le détail de la bonne façon de passer ces paramètres #footnote[Il y a tout de même une logique à tout ça.], mais les exemples parleront d'eux-même.
 
 === Notes de bas de page
 Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages :

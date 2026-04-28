@@ -25,7 +25,7 @@ Pour bien comprendre ce qu'est l'emphase, voici un exemple avec du texte normal 
   ```typst
   Texte normal avec une _emphase_ et du *gras*
 
-  #text(style: "italic")[Texte en italique avec une _emphase_]
+  #text(style: "italic")[Texte en italique avec une _emphase_ et du *gras*]
   ```
 ][
   Texte normal avec une _emphase_ et du *gras*
@@ -57,14 +57,14 @@ On peut utiliser plusieurs \= comme on peut le voir. Moins il y a de \= et plus 
 Avec le décalage des titres et sous-titres (dans le code), on discerne le plan.
 
 #tips[La numérotation des titres][
-  Comme tu peux le voir, il n'y a aucun numéro dans le code et pourtant, les titres sont numérotés dans le document.
-  Je décris la structure de mon document, je ne m'amuse pas à numéroter tous les titres, pour pouvoir réorganiser mon document sans penser à cela.
+  Comme on peut le voir, il n'y a aucun numéro dans le code et pourtant, les titres sont numérotés dans le document.
+  Je décris la structure de mon document, je ne m'amuse pas à numéroter tous les titres.
   Je fais confiance à #typst() pour appliquer la numérotation suivant une règle que je lui donnerais.
 ]
 
 === Listes sans numérotation ou listes à puces
 
-La liste sans numérotation se fait en commençant une ligne par un tiret(\-):
+La liste sans numérotation se fait en commençant une ligne par un tiret(\-) suivi d'un espace.
 
 #example[Liste à puce][
   ```typst
@@ -74,21 +74,7 @@ La liste sans numérotation se fait en commençant une ligne par un tiret(\-):
 ][
   - premier item
 - deuxième item
-]<exListe>
-
-=== Listes de descriptions
-
-#example[Liste de descriptions][
-  ```typst
-/ Description 1: première description
-/ Terme 2: description du deuxième terme 
-  ```
-][
-  / Description 1: première description
-  / Terme 2: description du deuxième terme
-]<exDescription>
-
-
+]
 
 
 === Listes avec numérotation ou énumerations
@@ -106,6 +92,20 @@ Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
 ]
 
 Là encore, on ne numérote pas nous même, c'est automatique.
+
+=== Listes de descriptions
+
+On commence la ligne par un \/ suivi d'un espace, du titre de la description, suivi de : et enfin de la description.
+
+#example[Liste de descriptions][
+  ```typst
+/ Description 1: première description
+/ Terme 2: description du deuxième terme 
+  ```
+][
+  / Description 1: première description
+  / Terme 2: description du deuxième terme
+]
 
 === Listes imbriquées
 
