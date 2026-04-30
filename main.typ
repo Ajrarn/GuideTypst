@@ -1,6 +1,6 @@
 // --------------- Imports de modules
 #import "utils.typ": typst
-#import "template.typ": guide, partie, my-outline, part, citation-block
+#import "template.typ": guide, my-outline, part, citation-block
 #show: guide.with(
   [Concevoir et rédiger vos documents avec #typst(size: 2em)],
     "Christophe Dos Santos",
@@ -21,7 +21,7 @@
 
 #part(complement: [
   #citation-block[Celui qui n'a pas plongé ne connaît pas la profondeur de la mer.][proverbe persan]
-])[Dans le grand bain]
+])[Dans le grand bain] 
 #include "bain/fonctions.typ"
 #include "bain/positionnement.typ"
 

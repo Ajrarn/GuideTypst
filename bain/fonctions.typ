@@ -1,29 +1,31 @@
-#import "../utils.typ": feature,typst, oe, OE, exemple
+#import "../utils.typ": feature,typst, oe, OE, example, exemple
 
-== Des variables
+= Des variables
 
-=== Exemple simple
+== Exemple simple
 
 Nous allons commencer par deux petites constantes toutes simples. Je ne sais pas comment taper avec mon clavier le e dans l'o, mais je sais le copier coller d'un texte qui le contient. Pour m'éviter de faire ces manipulations, je vais écrire deux variables pour faire cela en minuscule et en majuscule.
-
-```typst
-// Variable pour œ minuscule
-#let oe = [œ]
-
-// Variable pour Œ majuscule
-#let OE = [Œ]
-
-Ce qui nous permet de voir la différence entre oeuvre et #oe\uvre ou Oeuf et #OE\uf.
-```
-#exemple[Ce qui nous permet de voir la différence entre oeuvre et #oe\uvre ou Oeuf et #OE\uf.]
+#example[Variables pratiques][
+  ```typst
+  // Variable pour œ minuscule
+  #let oe = [œ]
+  
+  // Variable pour Œ majuscule
+  #let OE = [Œ]
+  
+  Ce qui nous permet de voir la différence entre oeuvre et #oe\uvre ou Oeuf et #OE\uf.
+  ```
+][
+  Ce qui nous permet de voir la différence entre oeuvre et #oe\uvre ou Oeuf et #OE\uf.
+]
 
 On commence notre ligne de code avec un \# ensuite, on voit le mot-clé _let_ qui nous permet de déclarer une variable. Notre première variable s'appelle _oe_. Le symbole = permet de lui affecter une valeur et cette valeur est de type content (entourée de crochets) qui contient le caractère que j'ai copié et collé ici. J'ai fait la même chose pour la variable _OE_.
 
 Ensuite, on peut voir comment je les appelle. Donc, dans mon texte je mets le \# pour pouvoir utiliser du code, suivi du nom de la variable que je souhaite utiliser, suivi du caractère \\ qui permet de terminer la partie code et de revenir au mode _Markup_.
 
-#feature[code caché][On ne voit pas dans notre document s'afficher les instructions let oe = ... . Quand on est dans un bloc de code, on exécute les instructions sans les afficher. Par contre, comme on exécute les instructions, faire appel à une variable équivaut à dire, affiches moi la valeur de la variable _oe_ dans notre exemple].
 
-=== Les types de données
+
+== Les types de données
 Comme #typst() s'apparente à un langage de programmation, il permet de manipuler des données, et pour qu'on ne s'emmêle pas trop les pinceaux, il les traite différemment en fonction de ce qu'elles représentent.
 Voyons les principaux, ceux qu'on a besoin de connaître tout de suite :
 - *_bool_* : le type booléen. Ce type ne peut contenir que deux valeurs _true_ et _false_ (respectivement _vrai_ et _faux_).
@@ -52,12 +54,12 @@ Voici quelques exemples reprenant les types mentionnés dans l'ordre :
 #let couleurTitre1 = rgb("#3d9970")
 ```
 
-=== Zoom sur le type _content_
+== Zoom sur le type _content_
 C'est le type le plus important de #typst(). Quand on écrit un document, on est par défaut dans un _content_.
 
 
-== Des fonctions<fonctions>
-=== Fonction sans paramètre
+= Des fonctions<fonctions>
+== Fonction sans paramètre
 
 Reprenons l'exemple précédent en utilisant cette fois-ci une fonction
 ```typst
@@ -91,8 +93,8 @@ Enfin, si comme ici il n'y a qu'une seule instruction qui est une valeur, les ac
 
 #feature[variable ou fonction ?][L'exemple qui a été mis ici renvoie une constante. Dans ce cas là, il vaut mieux préférer l'usage d'une variable, la syntaxe sera également plus facile à utiliser sans les parenthèses.]
 
-=== Fonction avec un paramètre
-==== Paramètre obligatoire
+== Fonction avec un paramètre
+=== Paramètre obligatoire
 
 On commence simplement avec la fonction qui me sert à illustrer les exemples :
 
@@ -127,7 +129,7 @@ Une liste de valeur :
   - *élément 2*
 ]
 
-=== Paramètre optionnel
+== Paramètre optionnel
 
 Voyons maintenant la fonction que j'utilise pour afficher #typst(). Je voulais une fonction qui me permette d'afficher le nom du produit avec la police et la couleur utilisée sur le site web. Par contre, je souhaitais pouvoir modifier la taille de la police indépendamment de la taille courante. J'ai donc rajouté un paramètre de taille avec une valeur par défaut :
 
@@ -159,7 +161,7 @@ Je peux donc appeler la fonction de deux manières différentes, avec ou sans le
 
 #feature[Paramètre nommé][Quand un paramètre a une valeur par défaut, on doit systématiquement l'utiliser avec son nom suivi de "*:*" suivi de sa valeur. Dans l'exemple précédent, il n'y a qu'un seul paramètre et pourtant je ne peux pas transmettre uniquement la valeur. Cela correspond aux _options_ que j'avais mentionné pour la fonction _text_.]
 
-=== plusieurs paramètres
+== plusieurs paramètres
 
 Je vais essayer d'illustrer plusieurs cas de figures avec des paramètres de types différents. Je ne vais pas montrer les exemples ici, juste le code source.
 

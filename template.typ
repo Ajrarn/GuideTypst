@@ -54,6 +54,23 @@
   // STYLE DES TITRES
   // --------------------------------------------------
   show heading: it => {
+    // Si pas de numérotation (ex: bibliographie), style minimal
+  if it.numbering == none {
+    // v(1.5em)
+    // text(size: 1.6em, weight: "bold", fill: primary-color)[#it.body]
+    // v(0.8em)
+    pagebreak(weak: true)
+      v(3em)
+      set par(first-line-indent: 0em)  // annule l'indentation ici
+        h(2em)
+        text(font: "Allura", size: 3.2em, weight: "bold", fill: primary-color, it.body)
+        v(-1.2em)
+        line(length: 100%, stroke: 1pt + primary-color)
+        v(4em)
+    return
+  }
+  
+  let levels = counter(heading).at(it.location())
     let levels = counter(heading).at(it.location())
     if it.level == 1 {
       pagebreak(weak: true)
@@ -64,6 +81,7 @@
         if chap-num > 0 {
           place(left, dx: -10pt, dy: -35pt)[
             #text(
+              // font: "Allura",
               font: "DejaVu Serif",
               size: 9em,
               fill: accent-color,
@@ -71,9 +89,10 @@
             )[#chap-num]
           ]
         }
+        h(2em)
         text(font: "Allura", size: 3.2em, weight: "bold", fill: primary-color, it.body)
         v(-1.2em)
-        line(length: 100%, stroke: 2pt + primary-color)
+        line(length: 100%, stroke: 1pt + primary-color)
       })
       v(4em)
     }
@@ -194,49 +213,6 @@
   body
 }
 
-
-// Fonction qui va affficher la page de séparation de partie avec complément
-#let partie(titre, complement: none) = {
-  // pagebreak(to: "odd", weak: true)
-  v(1fr)
-  align(center)[
-    // #text(size: 24pt, weight: "bold")[
-    //   PARTIE
-    //   #context {
-    //     let compteurs = counter(heading).at(here())
-    //     // Afficher le prochain numéro de partie (qui sera incrémenté juste après)
-    //     numbering("I", compteurs.at(0, default: 0) + 1)
-    //   }
-    // ]
-    = #titre
-    // #v(0.5em)
-    // #text(size: 20pt, weight: "bold")[#titre]
-    #v(2em)
-    #if complement != none [
-      #complement
-    ]
-  ]
-  v(1fr)
-
-  // Sauvegarder la valeur actuelle du compteur de chapitres (niveau 2)
-  context {
-    let compteurs = counter(heading).at(here())
-    let chapitre-actuel = if compteurs.len() >= 2 { compteurs.at(1) } else { 0 }
-
-    // Créer un heading de niveau 1
-    show heading: none
-    heading(level: 1)[#titre]
-
-    // Restaurer le compteur de chapitres
-    context {
-      let nouveaux-compteurs = counter(heading).at(here())
-      counter(heading).update((nouveaux-compteurs.at(0), chapitre-actuel))
-    }
-  }
-
-  pagebreak()
-}
-
 // --------------------------------------------------
 // FONCTION PARTIE
 // --------------------------------------------------
@@ -300,53 +276,55 @@
     headings.map(e => (kind: "heading", el: e))
   ).sorted(key: e => e.el.location().position().y.pt() + e.el.location().page() * 100000)
 
-  for entry in all-entries {
-    let el = entry.el
-    let loc = el.location()
-    let page-num = loc.page()
+ 
+  pad(left: 12%, right: 17%)[
+    #for entry in all-entries {
+      let el = entry.el
+      let loc = el.location()
+      let page-num = loc.page()
 
-    if entry.kind == "part" {
-      let part-num = entry.el.value.num
-      let part-title = entry.el.value.title
-      v(0.8em)
-      link(loc)[
-        #grid(
-          columns: (1fr, auto),
-          text(weight: "bold", fill: primary-color, size: 1.1em)[
-            #smallcaps("Partie") #numbering("I", part-num) — #part-title
-          ],
-          text(fill: primary-color, weight: "bold")[#page-num]
-        )
-      ]
-      v(0.3em)
-    } else {
-      let lvl = el.level
-      let indent = (lvl - 1) * 1.5em
-      let body = el.body
-      // Récupère les niveaux du compteur à la position de ce heading
-      let nums = counter(heading).at(loc)
-      let num-str = if lvl == 1 {
-        numbering("1", nums.at(0))
-      } else if lvl == 2 {
-        numbering("1.1", nums.at(0), nums.at(1))
-      } else {
-        none
-      }
-      link(loc)[
-        #pad(left: indent)[
+      if entry.kind == "part" {
+        let part-num = entry.el.value.num
+        let part-title = entry.el.value.title
+        v(0.8em)
+        link(loc)[
           #grid(
             columns: (1fr, auto),
-            gutter: 0.5em,
-            text(size: if lvl == 1 { 1em } else { 0.9em })[
-              #if num-str != none { text(fill: primary-color, weight: "bold")[#num-str #h(0.5em)] }
-              #body
+            text(weight: "bold", fill: primary-color, size: 1.1em)[
+              #smallcaps("Partie") #numbering("I", part-num) — #part-title
             ],
-            text(size: 0.9em)[#page-num]
+            text(fill: primary-color, weight: "bold")[#page-num]
           )
         ]
-      ]
+        v(0.3em)
+      } else {
+        let lvl = el.level
+        let indent = (lvl - 1) * 1.5em
+        let body = el.body
+        let nums = counter(heading).at(loc)
+        let num-str = if lvl == 1 {
+          numbering("1", nums.at(0))
+        } else if lvl == 2 {
+          numbering("1.1", nums.at(0), nums.at(1))
+        } else {
+          none
+        }
+        link(loc)[
+          #pad(left: indent)[
+            #grid(
+              columns: (1fr, auto),
+              gutter: 0.5em,
+              text(size: if lvl == 1 { 1em } else { 0.9em })[
+                #if num-str != none { text(fill: primary-color, weight: "bold")[#num-str #h(0.5em)] }
+                #body
+              ],
+              text(size: 0.9em)[#page-num]
+            )
+          ]
+        ]
+      }
     }
-  }
+  ]
 }
 
 #let citation-block(offset: 0em, content, author) = {
