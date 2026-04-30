@@ -1,18 +1,18 @@
 #import "../utils.typ": feature,warning,typst, LaTeX, exemple, example, tips
 
-== Markup
+= Markup
 
 La syntaxe que nous allons voir maintenant est celle des _content_ : le _Markup_
 
 
-=== Les Paragraphes
+== Les Paragraphes
 
 Un simple texte sans saut de ligne apparaît comme un paragraphe.
 Le texte est par défaut en mode justifié, c'est à dire qu'il constitue un seul bloc qui prend toute la largeur disponible, aligné à gauche et à droite.
 
 Il suffit d'insérer une ligne vide pour écrire un nouveau paragraphe. On peut aller à la ligne entre les phrases de notre paragraphe, mais c'est vraiment la ligne vide qui fait la séparation.
 
-=== L'Emphase - Valoriser le texte
+== L'Emphase - Valoriser le texte
 Il existe deux niveaux d'emphase(valorisation du texte), qui par défaut seront:
 - _emphase_
 - *gras*
@@ -38,7 +38,7 @@ Quand le texte global est normal, l'emphase met les mots sélectionnés en itali
 Pour accentuer davantage, on peut utiliser le gras qui ne change pas le style du texte.
 
 
-=== Les titres
+== Les titres
 
 #example[Niveau de titres][
   ```typst
@@ -62,7 +62,7 @@ Avec le décalage des titres et sous-titres (dans le code), on discerne le plan.
   Je fais confiance à #typst() pour appliquer la numérotation suivant une règle que je lui donnerais.
 ]
 
-=== Listes sans numérotation ou listes à puces
+== Listes sans numérotation ou listes à puces
 
 La liste sans numérotation se fait en commençant une ligne par un tiret(\-) suivi d'un espace.
 
@@ -77,7 +77,7 @@ La liste sans numérotation se fait en commençant une ligne par un tiret(\-) su
 ]
 
 
-=== Listes avec numérotation ou énumerations
+== Listes avec numérotation ou énumerations
 
 Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
 
@@ -93,7 +93,7 @@ Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
 
 Là encore, on ne numérote pas nous même, c'est automatique.
 
-=== Listes de descriptions
+== Listes de descriptions
 
 On commence la ligne par un \/ suivi d'un espace, du titre de la description, suivi de : et enfin de la description.
 
@@ -107,7 +107,7 @@ On commence la ligne par un \/ suivi d'un espace, du titre de la description, su
   / Terme 2: description du deuxième terme
 ]
 
-=== Listes imbriquées
+== Listes imbriquées
 
 Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser, soit une tabulation, soit des espaces #footnote[essayez d'avoir le même nombre pour tous les éléments d'un même niveau].
 
@@ -130,7 +130,7 @@ Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser,
 ]
 
 
-=== Labels et références<labelsReferences>
+== Labels et références<labelsReferences>
 
 Dans notre texte, on peut faire mention d'une partie du document, d'une figure, d'un annexe, d'un élément de bibliographie, etc.
 Pour ce faire, nous allons avoir besoin d'un moyen de poser une un marque-page que l'on va appeler un label et nous allons le référencer ailleurs.

@@ -1,15 +1,15 @@
 #import "../utils.typ": feature,warning,typst, LaTeX, exemple, example, tips
 
-== Modes syntaxiques
+= Modes syntaxiques<modesSyntaxiques>
  #typst() gère trois syntaxes différentes que l'on va appeler modes syntaxiques :
 
 / Markup : Par défaut un document _.typ_ contient un _content_ dont le langage est le _Markup_. C'est tout simplement du texte dans lequel certains caractères signifient quelque chose en terme de mise en page.
 / Math : C'est celui permet de faire les rendus des formules mathématiques.
 / Code : C'est celui qui va nous permettre d'écrire du code personnalisé.
 
-=== Passer d'un mode à l'autre
+== Passer d'un mode à l'autre
 
-==== Vers le mode _Math_
+=== Vers le mode _Math_
 
 A l'instar de #LaTeX, #typst() permet de rédiger et de mettre en valeur des formules mathématiques.
 
@@ -33,7 +33,7 @@ On peut également souhaiter que la formule soit isolée dans sa propre ligne, a
   La formule de la surface d'un cercle : $ S = pi r^2 $ préfère être dans un paragraphe.
 ]
 
-==== Vers le mode _Code_
+=== Vers le mode _Code_
 
 Il suffit d'utiliser le caractère \# pour entrer dans le mode _Code_. Quand l'instruction est terminée, il revient automatiquement au mode _Markup_.
 

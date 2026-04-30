@@ -1,8 +1,8 @@
 #import "../utils.typ": feature,LaTeX,typst, example, tips
 
-== Qu'est-ce que c'est ?
+= Qu'est-ce que c'est ?
 
-=== #typst() est un traitement de texte.
+== #typst() est un traitement de texte.
 
 Mais il ne ressemble pas du tout aux logiciels de cette catégorie les plus répandus :
 - Word (Microsoft),
@@ -21,11 +21,11 @@ Il y a beaucoup de différences entre ces deux type de traitement de texte, et j
 - plus transparente #footnote[il n'y a rien de caché dans le code]
 
 
-=== #typst() est une application Web
+== #typst() est une application Web
 Effectivement les auteurs de #typst() ont créé une application web de qualité@typst-app qui permet d'éditer en ligne les documents et de les générer. Elle propose différents abonnements, gratuits et payants et la possibilité de travailler en collaboration avec d'autres utilisateurs. C'est une façon intelligente de se rémunérer sur un projet Open Source. L'application Web n'est pas Open Source, mais la partie qui génère les documents oui.
 
 
-=== #typst() est un compilateur Open-Source
+== #typst() est un compilateur Open-Source
 Le programme qui transforme le code de description du document en PDF #footnote[mais cela peut aussi être en image ou en HTML] est Open Source et gratuit. Vous pouvez le trouver sur Github@typst.
 Quand on parle de compilateur, on pense à un programme qui transforme du code source en un autre programme, un exécutable. C'est un livrable autonome. Il n'a pas besoin de compilateur #footnote[On parle alors d'interpréteur.] pour être utilisable.
 
@@ -35,16 +35,16 @@ Quand on parle de compilateur, on pense à un programme qui transforme du code s
 - et bientôt en HTML et en ePub.
 qui n'a plus besoin du compilateur pour être lu, ni d'un client spécial. Bien sûr il faut un outil qui affiche le PDF ou un navigateur pour le HTML, mais le produit final est autonome de #typst().
 
-=== #typst() est un langage
+== #typst() est un langage
 #typst() est également un langage de description de document. Le compilateur reconnaît les instructions de ce langage et exécute les instructions du fichier _.typ _qu'on lui fournit.
 
 Il a sa propre syntaxe qui permet de décrire le document que l'on souhaite obtenir.
 C'est principalement cette syntaxe que nous allons découvrir progressivement dans ce document.
 
-== Conventions sur ce document
+= Conventions sur ce document
 
 
-=== Exemple de code
+== Exemple de code
 
 #example[Exemple de Code][
   ```typst
@@ -69,7 +69,7 @@ La pastille permet d'identifier le langage. Normalement, dans cet ouvrage, il de
 
 Les blocs qui se succèdent représentent des lignes de code. On voit le premier bloc gris sur deux lignes. En réalité dans le code, l'ensemble est écrit sur la même ligne. Pour éviter de déborder à droite #typst() va à la ligne, mais il reste en gris pour nous signaler que c'est la même ligne.
 
-=== Astuce
+== Astuce
 
 #tips[Première astuce][
   ```typst
@@ -80,7 +80,7 @@ Les blocs qui se succèdent représentent des lignes de code. On voit le premier
 
 Cette boite permet de mettre en valeurs des astuces, et celle qui y figure est vraiment pratique.
 
-=== Plan du document
+== Plan du document
 
 Ce ouvrage est structuré comme suit :
 

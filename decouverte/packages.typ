@@ -1,14 +1,14 @@
 #import "../utils.typ" : typst
 
-== Utilisation de packages
+= Utilisation de packages
 
-=== Le principe
+== Le principe
 Nous avons à peu près fait le tour des éléments de base fournis par #typst().
 Mais il offre bien plus que cela. En effet, comme nous le verrons par la suite, sa richesse nous permet de fabriquer nous mêmes de nouvelles fonctionnalités, des fonctions ou des modèles personnalisés. Et cela donne l’opportunité aux membres de la communauté de partager des packages pour résoudre différents problèmes.
 
 Tous ces packages de la communauté sont disponibles sur Typst Universe @universe
 
-=== Exemple détaillé<codly>
+== Exemple détaillé<codly>
 
 Par exemple, pour afficher le code source, j'ai utilisé un package appelé codly, et pour ce faire en respectant la documentation du package #footnote[que vous retrouverez grâce à Typst Universe @universe], j'ai ajouté les lignes suivantes :
 
@@ -70,6 +70,7 @@ Sur Typst Universe, vous trouverez beaucoup de packages très intéressants perm
 - d'appliquer différents templates de rapports de stage fournis par des universités ou des écoles d'ingénieur,
 - d'afficher des diagrammes de Gantt (gantty),
 - de modéliser des atomes,
+- de faire un livre de recettes de cuisine (chef-cookbook ou fancy-cookbook)
 - ...
 
 Alors n'hésitez pas à consulter les packages disponibles de temps en temps, cela pourrait vous donner des idées.

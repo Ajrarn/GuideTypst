@@ -1,5 +1,7 @@
+#let primary-color = rgb("#008080") 
+#let accent-color = primary-color.lighten(80%)
 // Créer un compteur spécifique pour les parties
-#let compteur-parties = counter("parties")
+#let part-counter = counter("parties")
 
 #let guide(
     titre,
@@ -47,96 +49,74 @@
     leading: 0.52em,
   )
 
-  set heading(numbering: (..nums,
-    supplement: it => {
-      let level = it.depth
-      if level == 1 { [Partie] }
-      else if level == 2 { [Chapitre] }
-      else if level == 3 { [Section] }
-      else { [Sous-section] }
-    }) => {
-    let nums = nums.pos()
-    if nums.len() == 1 {
-      // Niveau 1 = parties (numérotation en chiffres romains)
-      numbering("I", nums.at(0))
-    } else if nums.len() == 2 {
-      // Niveau 2 = chapitres (numérotation simple : 1, 2, 3...)
-      // On ignore le niveau 1 et on numérote indépendamment
-      numbering("1", nums.at(1))
-    } else if nums.len() == 3 {
-      // Niveau 3 = sections (numérotation : 1.1, 1.2...)
-      numbering("1.1", nums.at(1), nums.at(2))
-    } else {
-      // Niveau 4+ = sous-sections (numérotation : 1.1.1...)
-      numbering("1.1.1", ..nums.slice(1))
-    }
-  })
-
-
-  show heading.where(level: 1): it => {
-    // Ne rien afficher, l'affichage est géré par la fonction partie()
-    // Le heading sert uniquement pour la structure du document et le sommaire
-  }
-
-  show heading.where(level: 2): it => {
-    pagebreak(weak: true)
-    v(2cm)
-
-    if it.numbering != none {
-      // Utiliser context ici aussi
-      context {
-        let counts = counter(heading).at(here())
-        if counts.len() >= 2 {
-          align(center)[
-            #text(size: 14pt)[Chapitre #counts.at(1)]
-            #v(1.5em)
-            #text(size: 18pt, weight: "bold")[#it.body]
+ 
+  // --------------------------------------------------
+  // STYLE DES TITRES
+  // --------------------------------------------------
+  show heading: it => {
+    let levels = counter(heading).at(it.location())
+    if it.level == 1 {
+      pagebreak(weak: true)
+      v(3em)
+      set par(first-line-indent: 0em)  // annule l'indentation ici
+      block(width: 100%, {
+        let chap-num = levels.at(0)
+        if chap-num > 0 {
+          place(left, dx: -10pt, dy: -35pt)[
+            #text(
+              font: "DejaVu Serif",
+              size: 9em,
+              fill: accent-color,
+              weight: "black"
+            )[#chap-num]
           ]
         }
-      }
-    } else {
-      align(center)[
-        #text(size: 18pt, weight: "bold")[#it.body]
-      ]
+        text(font: "Allura", size: 3.2em, weight: "bold", fill: primary-color, it.body)
+        v(-1.2em)
+        line(length: 100%, stroke: 2pt + primary-color)
+      })
+      v(4em)
     }
-
-    v(2cm)
+    else if it.level == 2 {
+      v(1.5em)
+      let section-num = numbering("1.1", levels.at(0), levels.at(1))
+      stack(
+        dir: ltr,
+        spacing: 1em,
+        rect(fill: primary-color, radius: 2pt, inset: 0.5em)[
+          #text(fill: white, weight: "black", font: "Crimson Pro")[#section-num]
+        ],
+        align(
+          horizon,
+          text(size: 1.4em, weight: "bold", fill: primary-color.darken(20%), it.body)
+        )
+      )
+      v(0.8em)
+    }
+    else if it.level == 3 {
+      v(1em)
+      text(size: 1.1em, weight: "bold", fill: primary-color)[
+        #it.body
+        #h(0.5em)
+        #box(width: 1fr, line(length: 100%, stroke: 0.5pt + primary-color.lighten(50%)))
+      ]
+      v(0.5em)
+    }
+  }
+  
+  set heading(numbering: "1")
+ 
+  // On masque le titre quand ce sont des examples ou des tips
+  show figure.caption: it => {
+    if it.kind == "example" or it.kind == "tips" {
+      it.supplement
+      [ ]
+      context it.counter.display(it.numbering)
+    } else {
+      it  // comportement par défaut pour les vraies figures
+    }
   }
 
-  // Personnalisation des références pour avoir la page ou se trouve le label
-  // show ref: it => context {
-  //   if it.element != none {
-  //     let current-page = here().page()
-  //     let target-page = it.element.location().page()
-  //     let diff = target-page - current-page
-
-  //     let page-info = if diff == 0 {
-  //         // Même page : pas d'indication
-  //         none
-  //       } else if diff == 1 {
-  //         if calc.rem(current-page,2) == 0 {
-  //           [, page ci-contre]
-  //         } else {
-  //           // Page suivante (mais pas même double-page)
-  //           [, page suivante]
-  //         }
-  //       } else if diff == -1 {
-  //         if calc.rem(current-page,2) == 1 {
-  //           [, page ci-contre]
-  //         } else {
-  //           // Page précédente (mais pas même double-page)
-  //           [, page précédente]
-  //         }
-  //       } else {
-  //         // Écart plus grand
-  //         [, page #target-page]
-  //       }
-
-  //     [#it#page-info]
-  //   } else {
-  //     it
-  //   }
-  // }
   show ref: it => context {
   if it.element != none and it.element.func() == heading {
     let h = it.element
@@ -196,24 +176,17 @@
 
   // List style
   set list(indent: 3em)
-
   // -------------- Page de Titre
   page(margin: (top: 35mm, bottom: 33mm, left: 2cm, right: 2cm))[
       #set text(size: 20pt)
-
       #align(center)[
-
         #v(1fr)
         #text(size: 1.5em)[
           #titre
         ]
-
         #v(1fr)
-
         #description
-
         #v(1fr)
-
         #auteur
     ]
   ]
@@ -221,31 +194,23 @@
   body
 }
 
-// preambule function to be used in the document
-#let preambule(body) = [
-  // règle locale : pour les headings dans ce bloc, on règle heading(numbering: none)
-  #show heading: set heading(numbering: none)
-
-  // contenu du préambule
-  #body
-]
-
 
 // Fonction qui va affficher la page de séparation de partie avec complément
 #let partie(titre, complement: none) = {
-  pagebreak(to: "odd", weak: true)
+  // pagebreak(to: "odd", weak: true)
   v(1fr)
   align(center)[
-    #text(size: 24pt, weight: "bold")[
-      PARTIE
-      #context {
-        let compteurs = counter(heading).at(here())
-        // Afficher le prochain numéro de partie (qui sera incrémenté juste après)
-        numbering("I", compteurs.at(0, default: 0) + 1)
-      }
-    ]
-    #v(0.5em)
-    #text(size: 20pt, weight: "bold")[#titre]
+    // #text(size: 24pt, weight: "bold")[
+    //   PARTIE
+    //   #context {
+    //     let compteurs = counter(heading).at(here())
+    //     // Afficher le prochain numéro de partie (qui sera incrémenté juste après)
+    //     numbering("I", compteurs.at(0, default: 0) + 1)
+    //   }
+    // ]
+    = #titre
+    // #v(0.5em)
+    // #text(size: 20pt, weight: "bold")[#titre]
     #v(2em)
     #if complement != none [
       #complement
@@ -270,4 +235,129 @@
   }
 
   pagebreak()
+}
+
+// --------------------------------------------------
+// FONCTION PARTIE
+// --------------------------------------------------
+#let part(title, complement: none) = context {
+  part-counter.step()
+  let num = part-counter.get().first()
+  pagebreak(weak: true)
+
+  [#metadata((num: num, title: title)) <part-anchor>]
+
+  // page de titre
+  v(30%)
+  align(center)[
+    #text(
+      font: "TeX Gyre Adventor",
+      size: 0.9em,
+      weight: "light",
+      tracking: 0.3em,
+      fill: primary-color
+    )[
+      #smallcaps([Partie]) #numbering("I", num)
+    ]
+    #v(0.5em)
+    #block(
+      stroke: (y: 1.5pt + primary-color),
+      inset: (top: 1.5em, bottom: 1.5em),
+      width: 80%
+    )[
+      #text(
+        font: "TeX Gyre Adventor",
+        size: 3em,
+        weight: "bold"
+      )[
+        #title
+      ]
+    ]
+  ]
+  v(1fr)
+  if complement != none [
+    #complement
+  ]
+  v(1fr)
+  pagebreak()
+}
+
+// --------------------------------------------------
+// SOMMAIRE CUSTOM
+// --------------------------------------------------
+#let my-outline = context {
+  heading(outlined: false, numbering: none)[Sommaire]
+  
+  // On collecte toutes les entrées : parties et headings
+  // let parts = query(figure.where(kind: "part"))
+  let parts = query(<part-anchor>)
+  // el.value contient le dict (num, title)
+  let headings = query(heading.where(outlined: true))
+
+  // On fusionne et trie par position dans le document
+  let all-entries = (
+    parts.map(e => (kind: "part", el: e)) +
+    headings.map(e => (kind: "heading", el: e))
+  ).sorted(key: e => e.el.location().position().y.pt() + e.el.location().page() * 100000)
+
+  for entry in all-entries {
+    let el = entry.el
+    let loc = el.location()
+    let page-num = loc.page()
+
+    if entry.kind == "part" {
+      let part-num = entry.el.value.num
+      let part-title = entry.el.value.title
+      v(0.8em)
+      link(loc)[
+        #grid(
+          columns: (1fr, auto),
+          text(weight: "bold", fill: primary-color, size: 1.1em)[
+            #smallcaps("Partie") #numbering("I", part-num) — #part-title
+          ],
+          text(fill: primary-color, weight: "bold")[#page-num]
+        )
+      ]
+      v(0.3em)
+    } else {
+      let lvl = el.level
+      let indent = (lvl - 1) * 1.5em
+      let body = el.body
+      // Récupère les niveaux du compteur à la position de ce heading
+      let nums = counter(heading).at(loc)
+      let num-str = if lvl == 1 {
+        numbering("1", nums.at(0))
+      } else if lvl == 2 {
+        numbering("1.1", nums.at(0), nums.at(1))
+      } else {
+        none
+      }
+      link(loc)[
+        #pad(left: indent)[
+          #grid(
+            columns: (1fr, auto),
+            gutter: 0.5em,
+            text(size: if lvl == 1 { 1em } else { 0.9em })[
+              #if num-str != none { text(fill: primary-color, weight: "bold")[#num-str #h(0.5em)] }
+              #body
+            ],
+            text(size: 0.9em)[#page-num]
+          )
+        ]
+      ]
+    }
+  }
+}
+
+#let citation-block(offset: 0em, content, author) = {
+  v(offset)
+  align(center + horizon)[
+    #line(length: 30%, stroke: 0.5pt + primary-color.lighten(20%))
+    #v(0.6em)
+    #text(size: 1.3em, style: "italic")[#content]
+    #v(0.6em)
+    #text(size: 0.85em, fill: primary-color)[#author]
+    #v(0.4em)
+    #line(length: 30%, stroke: 0.5pt + primary-color.darken(20%))
+  ]
 }

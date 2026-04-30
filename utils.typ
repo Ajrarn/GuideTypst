@@ -63,7 +63,7 @@
   figure(
     kind: "example",
     supplement: [Exemple],
-    caption: [#title],
+    caption: "",
     showybox(
       width: 90%,
       title-style: (
@@ -95,7 +95,7 @@
   figure(
     kind: "tips",
     supplement: [Astuce],
-    caption: [#title],
+    caption: "",
     showybox(
       width: 90%,
       title-style: (
@@ -116,3 +116,4 @@
     ]
   )
 }
+

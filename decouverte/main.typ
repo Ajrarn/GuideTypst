@@ -1,0 +1,5 @@
+#include "modes.typ"
+#include "markup.typ"
+// #include "fonctionsStandard.typ"
+// #include "personnalisation.typ"
+// #include "packages.typ"
