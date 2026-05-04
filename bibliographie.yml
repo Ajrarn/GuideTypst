@@ -33,3 +33,7 @@ typs-doc-text:
   type: Web
   title: Documentation de text
   url: https://typst.app/docs/reference/text/text/
+typs-doc-par:
+  type: Web
+  title: Documentation de par
+  url: https://typst.app/docs/reference/model/par/#definitions-line

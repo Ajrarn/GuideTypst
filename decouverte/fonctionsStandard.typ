@@ -1,11 +1,11 @@
-#import "../utils.typ": feature,warning,typst, LaTeX, exemple, example, tips
+#import "../utils.typ": typst, LaTeX, exemple, example, tips
 
 = Fonctions standard
 La syntaxe _Markup_ ne suffit pas pour produire des documents riches. Dans ce chapitre, nous allons détailler les fonctions standard usuelles, celles que tout le monde doit connaître.
 
 Avant tout, nous allons devoir appeler des fonctions en leur passant des paramètres. Parfois, ces paramètres sont transmis entre parenthèses, parfois entre crochets, parfois on va nommer le paramètre et parfois pas.
 
-Pour l'instant, je n'entrerais pas dans le détail de la bonne façon de passer ces paramètres #footnote[Il y a tout de même une logique à tout ça.], mais les exemples parleront d'eux-même.
+Pour l'instant, je n'entrerais pas dans le détail de la bonne façon de passer ces paramètres #footnote[Il y a quand même une logique à tout ça.], mais les exemples parleront d'eux-même.
 
 == Notes de bas de page
 
@@ -24,9 +24,10 @@ Notre toute première fonction _footnote_ permet d'écrire des notes de bas de p
 Dans cet exemple, on rentre dans le mode _Code_ avec le \#, on appelle la fonction _footnote_ et cette fonction reçoit en paramètre un _content_ (entre crochets).
 
 L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombre de tâches:
+- Incrémenter le compteur de notes de bases de page,
 - Écrire le texte de l'expression en bas de la page,
 - lui associer un label (que l'on ne connaît pas),
-- poser une référence à l'emplacement de la fonction. C'est le nombre en indice, il est cliquable et nous renvoie à la note de bas de page.
+- poser une référence à l'emplacement de la fonction : C'est le nombre en indice, il est cliquable et nous renvoie à la note de bas de page.
 
 Les notes de bas de page ont leur propre numérotation qui par défaut court sur tout le document.
 
@@ -44,7 +45,7 @@ J'utilise une image libre de droits @ramen-source.
 
 Le texte que j'ai mis pour désigner l'image est un chemin relatif à l'emplacement du fichier source. Ici, j'ai un sous-dossier _images_ dans laquelle se trouve celle-ci.
 
-L'image prend tout l'espace disponible, par défaut elle prendra toute la largeur du paragraphe courant, mais on peut restreindre sa largeur :
+L'image prend tout l'espace disponible#footnote[Sauf si elle moins large que l'espace disponible.], par défaut elle prendra toute la largeur du paragraphe courant, mais on peut restreindre sa largeur :
 
 #example[Image moins large][
   ```typst
@@ -85,7 +86,7 @@ La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire
   )
 ]
 
-On appelle la fonction _table_ avec un paramètre nommé _column_ (ici avec deux colonnes), suivi d'une liste d'éléments (séparés par des virgules) qu'il va placer dans les cellules du tableau.
+On appelle la fonction _table_ avec un paramètre nommé _column_ (ici avec deux colonnes), suivi d'une liste de _content_, séparés par des virgules, qu'il va placer dans les cellules du tableau.
 On peut les regrouper par ligne du tableau pour une meilleure lisibilité du code, mais ce n'est pas nécessaire comme le montre la dernière ligne.
 
 == Flottants
@@ -192,7 +193,7 @@ J'ai donc préparé un fichier appelé bibliographie.yml et qui contient pour l'
       title: White Scoop on White Ceramic Bowl
       author: Quang Anh Ha Nguyen
       url: https://www.pexels.com/photo/white-scoop-on-white-ceramic-bowl-884600/
-    haragriva:
+    hayagriva:
       type: Web
       title: Hayagriva
       author: Typst

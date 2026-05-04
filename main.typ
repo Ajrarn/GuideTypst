@@ -12,7 +12,7 @@
 #my-outline
 
 #part[Introduction]
-#include "introduction/presentation.typ"
+#include "introduction/main.typ"
 
 #part(complement: [
   #citation-block[Le commencement est la partie la plus importante du travail.][Platon]

@@ -3,3 +3,4 @@
 #include "fonctionsStandard.typ"
 #include "personnalisation.typ"
 #include "packages.typ"
+#include "mathematiques.typ"

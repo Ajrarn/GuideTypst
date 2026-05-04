@@ -1,14 +1,6 @@
-#import "@preview/frame-it:1.2.0": frames, divide
-#import "@preview/showybox:2.0.4": showybox
-#let divide = divide
+#import "@preview/showybox:2.0.4": showybox,
+#import "template.typ": primary-color, accent-color
 
-#let (example, warning, feature, variant, syntax) = frames(
-  feature: ("Remarque", rgb("ADD8E6")),
-  warning: ("Attention", red.lighten(45%)),
-  variant: ("Variant",),
-  example: ("Exemple", blue.lighten(10%)),
-  syntax: ("Syntax",),
-)
 
 #let LaTeX = {
   let A = (
@@ -116,4 +108,20 @@
     ]
   )
 }
+
+#let my-table(columns: auto, caption: none, ..children) = {
+  align(center,
+    block(width: 90%,
+      figure(
+        table(
+          columns: columns,
+          ..children,
+        ),
+        caption: caption,
+      )
+    )
+  )
+}
+
+
 

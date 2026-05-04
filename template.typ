@@ -39,7 +39,7 @@
 
   set page(
     paper: "a4",
-    margin: (x: 1.8cm, y: 1.5cm),
+    margin: (inside: 2.5cm, outside: 1.5cm, y: 2cm),
     numbering: "1"
   )
 
@@ -97,7 +97,7 @@
       v(4em)
     }
     else if it.level == 2 {
-      v(1.5em)
+      v(2em)
       let section-num = numbering("1.1", levels.at(0), levels.at(1))
       stack(
         dir: ltr,
@@ -113,7 +113,8 @@
       v(0.8em)
     }
     else if it.level == 3 {
-      v(1em)
+      set par(first-line-indent: 0em)  // annule l'indentation ici
+      v(2em)
       text(size: 1.1em, weight: "bold", fill: primary-color)[
         #it.body
         #h(0.5em)
@@ -210,6 +211,25 @@
     ]
   ]
 
+  // Table Style
+  // set rule
+  set table(
+    fill: (col, row) => {
+      if row == 0 { primary-color }
+      else if calc.odd(row) { accent-color }
+      else { white }
+    },
+    stroke: (paint: primary-color.lighten(40%), thickness: 0.5pt),
+    inset: (x: 6pt, y: 6pt),
+    align: (col, row) => if row == 0 { center } else { left }
+  )
+
+  // show rule
+  show table.cell: set text(size:0.9em)
+  show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+
+  
+  // Document body
   body
 }
 

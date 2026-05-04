@@ -1,4 +1,4 @@
-#import "../utils.typ": feature,typst, oe, OE, example, exemple
+#import "../utils.typ": typst, oe, OE, example, exemple, tips
 
 = Des variables
 
@@ -91,7 +91,7 @@ On peut voir dans mon premier exemple, l'usage du mot clé _return_ devant le co
 
 Enfin, si comme ici il n'y a qu'une seule instruction qui est une valeur, les accolades sont aussi facultatives.
 
-#feature[variable ou fonction ?][L'exemple qui a été mis ici renvoie une constante. Dans ce cas là, il vaut mieux préférer l'usage d'une variable, la syntaxe sera également plus facile à utiliser sans les parenthèses.]
+#tips[variable ou fonction ?][L'exemple qui a été mis ici renvoie une constante. Dans ce cas là, il vaut mieux préférer l'usage d'une variable, la syntaxe sera également plus facile à utiliser sans les parenthèses.]
 
 == Fonction avec un paramètre
 === Paramètre obligatoire
@@ -159,7 +159,7 @@ Je peux donc appeler la fonction de deux manières différentes, avec ou sans le
 #typst(size:1.5em)
 ```
 
-#feature[Paramètre nommé][Quand un paramètre a une valeur par défaut, on doit systématiquement l'utiliser avec son nom suivi de "*:*" suivi de sa valeur. Dans l'exemple précédent, il n'y a qu'un seul paramètre et pourtant je ne peux pas transmettre uniquement la valeur. Cela correspond aux _options_ que j'avais mentionné pour la fonction _text_.]
+#tips[Paramètre nommé][Quand un paramètre a une valeur par défaut, on doit systématiquement l'utiliser avec son nom suivi de "*:*" suivi de sa valeur. Dans l'exemple précédent, il n'y a qu'un seul paramètre et pourtant je ne peux pas transmettre uniquement la valeur. Cela correspond aux _options_ que j'avais mentionné pour la fonction _text_.]
 
 == plusieurs paramètres
 

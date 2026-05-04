@@ -1,4 +1,4 @@
-#import "../utils.typ": feature,warning,typst, LaTeX, exemple, example, tips
+#import "../utils.typ": typst, LaTeX, exemple, example, tips
 
 = Markup
 
@@ -23,14 +23,14 @@ Pour bien comprendre ce qu'est l'emphase, voici un exemple avec du texte normal 
 
 #example[Emphase][
   ```typst
-  Texte normal avec une _emphase_ et du *gras*
+  Texte normal avec une _emphase_ et du *gras* ou les *_deux_*
 
-  #text(style: "italic")[Texte en italique avec une _emphase_ et du *gras*]
+  #text(style: "italic")[Texte en italique avec une _emphase_ et du *gras* ou les *_deux_*]
   ```
 ][
-  Texte normal avec une _emphase_ et du *gras*
+  Texte normal avec une _emphase_ et du *gras* ou les *_deux_*
 
-  #text(style: "italic")[Texte en italique avec une _emphase_ et du *gras*]
+  #text(style: "italic")[Texte en italique avec une _emphase_ et du *gras* ou les *_deux_*]
 ]
 
 Quand le texte global est normal, l'emphase met les mots sélectionnés en italique. Quand le texte global est en italique, les mots sélectionnés sont en normal. L'emphase sert à mettre l'accent sur une suite de mots, un accent léger.
@@ -54,7 +54,7 @@ Pour accentuer davantage, on peut utiliser le gras qui ne change pas le style du
 
 Le symbole *\=* suivi d'un espace est utilisé pour dire : Le reste de la ligne est un titre.
 On peut utiliser plusieurs \= comme on peut le voir. Moins il y a de \= et plus le titre est important,
-Avec le décalage des titres et sous-titres (dans le code), on discerne le plan.
+Avec le décalage des titres et sous-titres, dans le code, on discerne le plan.
 
 #tips[La numérotation des titres][
   Comme on peut le voir, il n'y a aucun numéro dans le code et pourtant, les titres sont numérotés dans le document.
