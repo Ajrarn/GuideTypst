@@ -19,9 +19,9 @@ Il existe deux niveaux d'emphase(valorisation du texte), qui par défaut seront:
 
 Du texte entouré d'underscore(\_) pour l'emphase, du texte entouré d'astérisques(\*) pour le gras.
 
-Pour bien comprendre ce qu'est l'emphase, voici un exemple avec du texte normal et du texte en italique.
+Pour bien comprendre ce qu'est l'emphase, voici un exemple(cf. @exEmphase) avec du texte normal et du texte en italique.
 
-#example[Emphase][
+#example(label:<exEmphase>)[Emphase][
   ```typst
   Texte normal avec une _emphase_ et du *gras* ou les *_deux_*
 
@@ -39,22 +39,21 @@ Pour accentuer davantage, on peut utiliser le gras qui ne change pas le style du
 
 
 == Les titres
+Voici la syntaxe pour les titres :
 
-#example[Niveau de titres][
-  ```typst
-  = Dans le petit bassin
-  ...
-  == Markup
-  ...
-  === Les titres
-  ```
-][
-  Ici exceptionnellement je ne pourrais pas illustrer l'exemple, mais cela correspond à la structure menant à cette section. On voit le titre de la partie, du chapitre et de la section
-]
+```typst
+= Dans le petit bassin
+...
+== Markup
+...
+=== Les titres
+```
+
+Ici exceptionnellement je ne pourrais pas illustrer l'exemple dans une boite, mais cela correspond à la structure menant à cette section. On voit le titre de la partie, du chapitre et de la section.
+
 
 Le symbole *\=* suivi d'un espace est utilisé pour dire : Le reste de la ligne est un titre.
-On peut utiliser plusieurs \= comme on peut le voir. Moins il y a de \= et plus le titre est important,
-Avec le décalage des titres et sous-titres, dans le code, on discerne le plan.
+On peut utiliser plusieurs \= comme on peut le voir. Moins il y a de \= et plus le titre est important.
 
 #tips[La numérotation des titres][
   Comme on peut le voir, il n'y a aucun numéro dans le code et pourtant, les titres sont numérotés dans le document.
@@ -64,9 +63,9 @@ Avec le décalage des titres et sous-titres, dans le code, on discerne le plan.
 
 == Listes sans numérotation ou listes à puces
 
-La liste sans numérotation se fait en commençant une ligne par un tiret(\-) suivi d'un espace.
+La liste sans numérotation se fait en commençant une ligne par un tiret(\-) suivi d'un espace(cf. @exListePuces).
 
-#example[Liste à puce][
+#example(label:<exListePuces>)[Liste à puce][
   ```typst
 - premier item
 - deuxième item 
@@ -79,9 +78,9 @@ La liste sans numérotation se fait en commençant une ligne par un tiret(\-) su
 
 == Listes avec numérotation ou énumerations
 
-Pour obtenir une liste numérotée, on va plutôt utiliser des plus(\+):
+Pour obtenir une liste numérotée(cf. @exEnum), on va plutôt utiliser des plus(\+):
 
-#example[Énumérations][
+#example(label:<exEnum>)[Énumérations][
   ```typst
   + premier item
   + deuxième item
@@ -95,9 +94,9 @@ Là encore, on ne numérote pas nous même, c'est automatique.
 
 == Listes de descriptions
 
-On commence la ligne par un \/ suivi d'un espace, du titre de la description, suivi de : et enfin de la description.
+On commence la ligne par un \/ suivi d'un espace, du titre de la description, suivi de : et enfin du texte de la description(cf. @exDesc).
 
-#example[Liste de descriptions][
+#example(label:<exDesc>)[Liste de descriptions][
   ```typst
 / Description 1: première description
 / Terme 2: description du deuxième terme 
@@ -109,9 +108,9 @@ On commence la ligne par un \/ suivi d'un espace, du titre de la description, su
 
 == Listes imbriquées
 
-Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser, soit une tabulation, soit des espaces #footnote[essayez d'avoir le même nombre pour tous les éléments d'un même niveau].
+Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser, soit une tabulation, soit des espaces #footnote[essayez d'avoir le même nombre pour tous les éléments d'un même niveau] (cf. @exImbriquees).
 
-#example[Listes imbriquées][
+#example(label:<exImbriquees>)[Listes imbriquées][
   ```typst
   - premier parent
       - premier enfant du premier parent
@@ -133,9 +132,9 @@ Pour imbriquer des listes, qui peuvent avoir plusieurs niveaux il faut utiliser,
 == Labels et références<labelsReferences>
 
 Dans notre texte, on peut faire mention d'une partie du document, d'une figure, d'un annexe, d'un élément de bibliographie, etc.
-Pour ce faire, nous allons avoir besoin d'un moyen de poser une un marque-page que l'on va appeler un label et nous allons le référencer ailleurs.
+Pour ce faire, nous allons avoir besoin d'un moyen de poser un marque-page que l'on va appeler un label et nous allons le référencer ailleurs(cf. @exLabel).
 
-#example[Labels et Références][
+#example(label:<exLabel>)[Labels et Références][
   ```typst
   == Labels et références<labelsReferences>
   ...

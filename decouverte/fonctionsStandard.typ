@@ -9,9 +9,9 @@ Pour l'instant, je n'entrerais pas dans le détail de la bonne façon de passer 
 
 == Notes de bas de page
 
-Notre toute première fonction _footnote_ permet d'écrire des notes de bas de page :
+Notre toute première fonction _footnote_ permet d'écrire des notes de bas de page(cf. @exBasPage) :
 
-#example[Note de bas de page][
+#example(label:<exBasPage>)[Note de bas de page][
   ```typst
   Au lieu d'utiliser des parenthèses #footnote[quand par exemple le texte est particulièrement long et risque de rendre l'interruption de la parenthèse trop importante], on peut utiliser des notes de bas de pages.
   ```
@@ -32,27 +32,27 @@ L'avantage d'utiliser cette fonction est qu'elle fait pour nous un certain nombr
 Les notes de bas de page ont leur propre numérotation qui par défaut court sur tout le document.
 
 == Images
-On commence par insérer simplement une image.
-J'utilise une image libre de droits @ramen-source.
+Voici comment insérer une image(cf. @exImage).
+J'utilise pour cet exemple une image libre de droits @ramen-source.
 
-#example[Image][
+#example(label:<exImage>)[Image][
 ```typst
-#image("../images/Ramen Photo.jpg")
+#image("../assets/Ramen Photo.jpg")
 ```
 ][
-#image("../images/Ramen Photo.jpg")
+#image("../assets/Ramen Photo.jpg")
 ]
 
 Le texte que j'ai mis pour désigner l'image est un chemin relatif à l'emplacement du fichier source. Ici, j'ai un sous-dossier _images_ dans laquelle se trouve celle-ci.
 
-L'image prend tout l'espace disponible#footnote[Sauf si elle moins large que l'espace disponible.], par défaut elle prendra toute la largeur du paragraphe courant, mais on peut restreindre sa largeur :
+L'image prend tout l'espace disponible#footnote[Sauf si elle moins large que l'espace disponible.], par défaut elle prendra toute la largeur du paragraphe courant, mais on peut restreindre sa largeur(cf. @exImageRestreinte).
 
-#example[Image moins large][
+#example(label:<exImageRestreinte>)[Image moins large][
   ```typst
-  #image("../images/Ramen Photo.jpg", width: 70%)
+  #image("../assets/Ramen Photo.jpg", width: 70%)
   ```
 ][
-  #image("../images/Ramen Photo.jpg", width: 70%)
+  #image("../assets/Ramen Photo.jpg", width: 70%)
 ]
 
 La largeur spécifiée _witdh_ est proportionnelle à la largeur totale#footnote[70% de la largeur du bloc courant], mais on aurait pu y écrire une mesure en _cm_ ou en _in_(inches).
@@ -61,14 +61,14 @@ On constate également que notre image n'est pas centrée par défaut, elle s'al
 #tips[Paramètres][
   Si on regarde de plus près le passage de paramètre, ici les paramètres sont entre parenthèses, ce ne sont pas des _content_.
 
-  Le premier paramètre n'a pas de nom et le second oui. Pour faire simple, le premier est obligatoire, sans cette valeur, on ne peut pas afficher d'image, le deuxième _width_ fait partie d'un ensemble de paramètres optionnels. Donc, au lieu d'avoir une fonction avec une dizaine de paramètres qu'on n'utilise jamais, c'est plus pratique de les nommer quand on en a besoin.
+  Le premier paramètre n'a pas de nom et le second oui. Pour faire simple, le premier est obligatoire, sans cette valeur, on ne peut pas afficher d'image,il est donc inutile de le nommer. Le deuxième _width_ fait partie d'un ensemble de paramètres optionnels. Donc, au lieu d'avoir une fonction avec une dizaine de paramètres qu'on n'utilise jamais, c'est plus pratique de les nommer quand on en a besoin.
 ]
 
 == Tableaux
 
-La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire un sirop de citron :
+La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire un sirop de citron(cf. @exTableau)
 
-#example[Tableau][
+#example(label:<exTableau>)[Tableau][
   ```typst
   #table(
     columns: 2,
@@ -78,6 +78,17 @@ La syntaxe pour faire des tableaux est assez simple. Voici un exemple pour faire
   )
   ```
 ][
+  #set table(
+    fill: none,
+    stroke:1pt + black,
+    inset:0% + 5pt,
+    align: auto
+  )
+
+  // show rule
+  #show table.cell: set text(size:1em)
+  #show table.cell.where(y: 0): set text(weight: "regular", fill: black)
+  
   #table(
     columns: 2,
     [*Ingrédient*], [*Quantité*],
@@ -95,18 +106,20 @@ Quand on rédige un gros document, on va parfois inclure des objets volumineux, 
 
 Il est d'usage de rendre ces objets flottants #footnote[On laisse le soin à #typst() de le positionner au meilleur endroit possible.]. Mais d'une manière générale, même s'ils ne sont pas si grands, c'est bien d'utiliser des flottants.
 
-Ces flottants gagnent également la possibilité d'être numérotés et donc de porter une référence.
+L'idée derrière ce terme est de ne pas imposer l'emplacement où le flottant apparaîtra sur la page. On ne l'affiche pas forcément là où on le décrit, mais on laisse à #typst() le soin de le positionner là où il pourra être entier, et à la place continuer le flux de texte. Si on ne faisait pas ça, en le conservant entier, on risquerait d'avoir une page quasiment blanche avant qu'apparaisse le contenu du flottant.
+
+Pour contrebalancer l'éloignement du flottant, ces derniers gagnent la possibilité d'être numérotés et donc de porter une référence.
 On pourra ensuite faire un index des images, des tableaux, ... mais surtout utiliser un label dans notre texte puisque l'on n'est pas sûr de l'emplacement final du flottant.
 
 Pour information, les blocs _Exemple_ et _Astuce_ sont des flottants.
 
-Donc, la fonction idéale pour cela est _figure_ :
+Donc, la fonction idéale pour cela est _figure_ (cf. @exFigure) :
 
-#example[Image dans une figure][
+#example(label:<exFigure>)[Image dans une figure][
   ```typst
   Ce texte est écrit avant la figure et pourtant il apparaît après.
   #figure(
-    image("../images/Ramen Photo.jpg", width: 70%),
+    image("../assets/Ramen Photo.jpg", width: 70%),
     caption: [
       les _Ramen_, un incontournable de la cuisine japonaise.
     ],
@@ -116,7 +129,7 @@ Donc, la fonction idéale pour cela est _figure_ :
 ][
   Ce texte est écrit avant la figure et pourtant il apparaît après.
   #figure(
-    image("../images/Ramen Photo.jpg", width: 70%),
+    image("../assets/Ramen Photo.jpg", width: 70%),
     caption: [
       les _Ramen_, un incontournable de la cuisine japonaise.
     ],
@@ -141,10 +154,10 @@ Concernant le positionnement, la propriété _placement_ joue un rôle :
 - Si je met la valeur _top_, il va mettre la figure en haut du bloc courant#footnote[La page habituellement.].
 - Si je met la valeur _bottom_, il va mettre la figure en bas du bloc courant.
 
-Regardons maintenant un tableau dans une figure :
+Regardons maintenant un tableau dans une figure(cf. @exTableauFigure) :
 
 
-#example[Tableau dans une figure][
+#example(label:<exTableauFigure>)[Tableau dans une figure][
   ```typst
 #figure(
   table(

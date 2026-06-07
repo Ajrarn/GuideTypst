@@ -3,6 +3,60 @@
 // Créer un compteur spécifique pour les parties
 #let part-counter = counter("parties")
 
+// ── Ornement de numéro de page ───────────────────────────────────────────────
+#let folio-orne(numéro) = {
+  let filet-lg    = 28pt
+  let filet-ep    = 0.6pt
+  let espacement  = 6pt
+  let dot-r       = 1.4pt
+
+  box(
+    stroke: none,
+    inset: 0pt,
+    {
+      set align(center + horizon)
+      grid(
+        columns: (filet-lg, auto, filet-lg),
+        column-gutter: espacement,
+        align: center + horizon,
+        // Filet gauche — point à droite (côté numéro)
+        {
+          place(
+            center + horizon,
+            block(width: filet-lg, height: filet-ep, fill: accent-color)
+          )
+          place(
+            right + horizon,
+            dx: dot-r,
+            circle(radius: dot-r, fill: accent-color, stroke: none)
+          )
+        },
+        // Numéro
+        text(
+          fill: primary-color,
+          size: 9pt,
+          weight: "medium",
+          font: "Crimson Pro",
+          str(numéro)
+        ),
+        // Filet droit — point à gauche (côté numéro)
+        {
+          place(
+            center + horizon,
+            block(width: filet-lg, height: filet-ep, fill: accent-color)
+          )
+          place(
+            left + horizon,
+            dx: -dot-r,
+            circle(radius: dot-r, fill: accent-color, stroke: none)
+          )
+        },
+      )
+    }
+  )
+}
+
+
 #let guide(
     titre,
     auteur,
@@ -24,6 +78,12 @@
   import "@preview/frame-it:1.2.0": *
   show: frame-style(styles.boxy)
 
+  import "@preview/iconify:0.5.3": icon, provide-icons
+
+  provide-icons(json("assets/lucide-lab.json"))
+
+  
+
   // Réglages globaux
   set document(
     title: titre,
@@ -40,7 +100,10 @@
   set page(
     paper: "a4",
     margin: (inside: 2.5cm, outside: 1.5cm, y: 2cm),
-    numbering: "1"
+    numbering: "1",
+    footer: context [
+      #align(center, folio-orne(counter(page).get().first()))
+    ]
   )
 
   set par(
@@ -137,31 +200,32 @@
     }
   }
 
+  // Affichage des références
   show ref: it => context {
-  if it.element != none and it.element.func() == heading {
-    let h = it.element
-    let nums = counter(heading).at(h.location())
-    let level = h.depth
-
-    let num-str = if level == 1 {
-      numbering("I", nums.at(0))
-    } else if level == 2 {
-      numbering("1", nums.at(1))
-    } else if level == 3 {
-      numbering("1.1", nums.at(1), nums.at(2))
-    } else {
-      numbering("1.1.1", ..nums.slice(1))
-    }
-
-    let supplement = if level == 1 { [Partie] }
-      else if level == 2 { [Chapitre] }
-      else if level == 3 { [Section] }
-      else { [Sous-section] }
-
-    let current-page = here().page()
-    let target-page = h.location().page()
-    let diff = target-page - current-page
-    let page-info = if diff == 0 {
+    if it.element != none and it.element.func() == heading {
+      let h = it.element
+      let nums = counter(heading).at(h.location())
+      let level = h.depth
+  
+      let num-str = if level == 1 {
+        numbering("1", nums.at(0))
+      } else if level == 2 {
+        numbering("1.1", nums.at(0), nums.at(1))   // ← ajout de nums.at(0)
+      } else if level == 3 {
+        numbering("1.1.1", nums.at(0), nums.at(1), nums.at(2))  // ← nums.at(0) aussi
+      } else {
+        numbering("1.1.1.1", ..nums)  // ← pas de slice(1) puisque plus de partie
+      }
+  
+      let supplement = if level == 1 { [Chapitre] }
+        else if level == 2 { [Section] }
+        else if level == 3 { [Sous-section] }
+        else { [Sous-section] }
+  
+      let current-page = here().page()
+      let target-page = h.location().page()
+      let diff = target-page - current-page
+      let page-info = if diff == 0 {
         none
       } else if diff == 1 {
         if calc.rem(current-page, 2) == 0 { [, page ci-contre] }
@@ -172,36 +236,37 @@
       } else {
         [, page #target-page]
       }
-
-    [#supplement~#num-str#page-info]
-
-  } else if it.element != none {
-    // Référence non-heading : comportement original
-    let current-page = here().page()
-    let target-page = it.element.location().page()
-    let diff = target-page - current-page
-    let page-info = if diff == 0 { none }
-      else if diff == 1 {
-        if calc.rem(current-page, 2) == 0 { [, page ci-contre] }
-        else { [, page suivante] }
-      } else if diff == -1 {
-        if calc.rem(current-page, 2) == 1 { [, page ci-contre] }
-        else { [, page précédente] }
-      } else { [, page #target-page] }
-    [#it#page-info]
-  } else {
-    it
+  
+      [#supplement~#num-str#page-info]
+  
+    } else if it.element != none {
+      // Référence non-heading : comportement original
+      let current-page = here().page()
+      let target-page = it.element.location().page()
+      let diff = target-page - current-page
+      let page-info = if diff == 0 { none }
+        else if diff == 1 {
+          if calc.rem(current-page, 2) == 0 { [, page ci-contre] }
+          else { [, page suivante] }
+        } else if diff == -1 {
+          if calc.rem(current-page, 2) == 1 { [, page ci-contre] }
+          else { [, page précédente] }
+        } else { [, page #target-page] }
+      [#it#page-info]
+    } else {
+      it
+    }
   }
-}
 
   // List style
   set list(indent: 3em)
+  set terms(indent: 3em)
   // -------------- Page de Titre
   page(margin: (top: 35mm, bottom: 33mm, left: 2cm, right: 2cm))[
       #set text(size: 20pt)
       #align(center)[
         #v(1fr)
-        #text(size: 1.5em)[
+        #text(size: 3em, font: "Allura", fill:primary-color)[
           #titre
         ]
         #v(1fr)
@@ -227,6 +292,27 @@
   // show rule
   show table.cell: set text(size:0.9em)
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
+
+  //test Show rules
+  // show "Oeuvre": word => [Œuvre]
+  let oe-words = (
+    "Oeuvre": [Œuvre], "oeuvre": "œuvre",
+    "Oeil": "Œil",     "oeil": "œil",
+    "Oeufs": "Œufs",   "oeuf": "œuf",
+    "Coeur": "Cœur",   "coeur": "cœur",
+    "Soeur": "Sœur",   "soeur": "sœur",
+    "Noeud": "Nœud",   "noeud": "nœud",
+    "Voeu": "Vœu",     "voeu": "vœu",
+    "Moelle": "Moelle", "moelle": "moelle",  // œ !
+    "Manoeuvre": "Manœuvre", "manoeuvre": "manœuvre",
+    "Moeurs": "Mœurs", "moeurs": "mœurs",
+    "Foetus": "Fœtus", "foetus": "fœtus",
+    "Oedeme": "Œdème", "oedeme": "œdème",
+  )
+  
+  for (wrong, right) in oe-words.pairs() {
+    show str(wrong): word => right
+  }
 
   
   // Document body

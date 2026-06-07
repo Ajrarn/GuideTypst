@@ -1,5 +1,6 @@
 #import "../utils.typ": *
 #import "../template.typ": primary-color, accent-color
+#import "@preview/iconify:0.5.3": icon
 
 = Set Rules
 
@@ -7,9 +8,9 @@ On va maintenant voir comment personnaliser nos documents avec les _set rules_ e
 
 == Derrière le _Markup_
 
-Le _Markup_ nous apporte le confort de ne pas utiliser des fonctions en permanence pour écrire notre texte, mais ce qu'il fait au fond, c'est utiliser des fonctions natives de #typst(). Par exemple :
+Le _Markup_ nous apporte le confort de ne pas utiliser des fonctions en permanence pour écrire notre texte, mais ce qu'il fait au fond, c'est utiliser des fonctions natives de #typst() (cf. @exTexteFonction).
 
-#example[Texte en fonction][
+#example(label:<exTexteFonction>)[Texte en fonction][
   ```typst
   Mon texte avec de l'_italique_ et du *gras*. 
   
@@ -29,26 +30,26 @@ _text_ est une fonction particulière, c'est une _element function_, il y en a d
 / par : pour les paragraphes
 / page : pour la page
 / list : pour les listes
+/ terms : pour les descriptions
 
-Donc, si on peut modifier les réglages d'une de ses fonctions, on sait que cela s'appliquera à l'ensemble du document et c'est tout l'intérêt d'utiliser un traitement de texte comme #typst(). On peut réaliser une mise en page basée sur des règles qui s'appliquent partout.
+Chacune de ses fonctions reçoit des propriétés, comme dans notre exemple la propriété _style_ pour la fonction _text_.
+Et dans l'idéal, on souhaite que la modification s'applique à tout le document suivant des règles.
 
 #pagebreak()
 
 == Des réglages avec les _set rules_
 
-La fonction _set_ est très puissante, elle permet d'affecter une valeur à une _element function_ jusqu'à nouvel ordre.
-Expliquons là avec un exemple.
+La fonction _set_ est très puissante, elle permet d'affecter une valeur à une ou plusieurs propriétés d'une _element function_ jusqu'à nouvel ordre#footnote[Tant qu'on ne lui affecte pas une nouvelle valeur] (cf. @exSetRule).
 
-#example[set rules][
+#example(label:<exSetRule>)[set rules][
   ```typst
-  #text[Texte en noir]
-  #set text(fill:blue)
-  #text[Texte en bleu]
-  #text[Texte en bleu aussi]
-  #set text(fill:red)
-  #text[Texte en rouge]
+  // Syntaxe sans utiliser set
+  Texte en noir,
+  #text(fill:blue)[Texte en bleu,]
+  #text(fill:blue)[Texte en bleu aussi,]
+  #text(fill:red)[Texte en rouge]
 
-  #set text(fill:black)
+  //Syntaxe avec set
   Texte en noir,
   #set text(fill:blue)
   Texte en bleu,
@@ -57,14 +58,13 @@ Expliquons là avec un exemple.
   Texte en rouge
   ```
 ][
-  #text[Texte en noir,]
-  #set text(fill:blue)
-  #text[Texte en bleu,]
-  #text[Texte en bleu aussi,]
-  #set text(fill:red)
-  #text[Texte en rouge]
+  // Syntaxe sans utiliser set
+  Texte en noir,
+  #text(fill:blue)[Texte en bleu,]
+  #text(fill:blue)[Texte en bleu aussi,]
+  #text(fill:red)[Texte en rouge]
 
-  #set text(fill:black)
+  //Syntaxe avec set
   Texte en noir,
   #set text(fill:blue)
   Texte en bleu,
@@ -85,10 +85,97 @@ J'ai donc fixé la valeur pour les appels successifs avec la fonction _set_ et e
   ```typst
   #set text(fill:red)
   ```
-  en dehors d'un bloc, *TOUT* le texte du document après cette ligne serait devenue rouge. Donc, n'utilisez _set_ que pour des propriétés que vous souhaitez apporter au document dans son ensemble. Pour colorer le texte, on pourra faire autrement.
+  en dehors d'un bloc, *TOUT* le texte du document après cette ligne serait devenue rouge. Donc, n'utilisez _set_ que pour des propriétés que vous souhaitez apporter au document dans son ensemble. Pour des modifications ponctuelles, on pourra faire autrement.
+]
+
+#pagebreak()
+Enfin, la règle se maintient même si on inclue un appel avec une valeur différente(cf. @exRuleMaintenue).
+
+#example(label:<exRuleMaintenue>)[Maintien de la règle][
+  Si on fait un appel de la fonction en spécifiant un paramètre, la modification ne s'applique QUE pour son contenu, et ne modifie pas la règle :
+
+  ```typst
+  #set text(fill: blue)
+  Bleu
+  Bleu
+  #text(fill:red)[Rouge]
+  Et encore bleu
+  ```
+][
+  #set text(fill: blue)
+  Bleu
+  Bleu
+  #text(fill:red)[Rouge]
+  Et encore bleu
 ]
 
 Nous allons maintenant explorer quelques _element function_ avec leurs paramètres, mais pas de manière exhaustive. Pour tout explorer en détail, je conseille de parcourir la documentation officielle @typst-documentation.
+
+== Le document
+
+On commence par un élément qui est invisible, mais qui reste important, c'est le document lui-même.
+
+Sur celui-ci, nous allons simplement poser des méta-données qui seront dans le PDF lui-même. Propriétés utiles notamment en terme d'accessibilité, mais qui sont également exploitables par vos propres améliorations, une page de titre par exemple pourra lire la propriété _title_ pour l'afficher.
+
+```typst
+#set document(
+  title: [Mon Titre],
+  author: "Moi",
+  description: [C'est ou ouvrage qui parle de moi.],
+  keywords: ("moi","ma vie", "mes succès"),
+  date: auto,
+)
+```
+
+== La page
+
+Ces réglages son également très importants, on va pouvoir définir la taille du papier, son orientation, les marges, etc.
+
+Voici mes propres réglages :
+
+```typst
+#set page(
+  paper: "a4",
+  margin: (inside: 2.5cm, outside: 1.5cm, y: 2cm),
+  numbering: "1"
+)
+```
+
+/ paper : détermine la taille du papier,
+/ margin : permet de configurer les marges,
+/ numbering: définit le type de numérotation
+
+On va s'attarder ici sur deux propriétés aux options très intéressantes.
+
+=== margin
+Cette propriété va nous permettre de configurer les marges de la page. Elle s'écrit sous la forme d'un dictionnaire, c'est à dire, une série de propriétés entre parenthèses avec le nom de la propriété et sa valeur séparée par ":", et chacune séparée par une ",".
+
+```typst
+margin: (inside: 2.5cm, outside: 1.5cm, y: 2cm)
+```
+Voici les propriétés que l'on peut utiliser :
+
+/ top: La marge du haut,
+/ right: La marge de droite,
+/ bottom: La marge du bas,
+/ left: La marge de gauche,
+/ inside: La marge intérieure, celle qui se trouve près de la reliure#footnote[Et qui sera à gauche sur une page de droite(impaire) et à droite sur une page de gauche(paire).],
+/ outside: La marge extérieure, qui se trouve à l'opposé de la marge _inside_,
+/ x: La marge horizontale, donc à droite et à gauche,
+/ y: La marge verticale, donc en haut et en bas,
+/ rest: Enfin, toutes les marges non spécifiées.
+
+=== numbering
+
+=== flipped
+Chaque format de papier a une orientation par défaut: 
+- Pour le format _a4_, c'est l'orientation portrait,
+- pour le format _us-business-card_, c'est l'orientation paysage.
+Quand on souhaite appliquer l'autre orientation, il suffit de la faire pivoter avec :
+
+```typst
+#set page(flipped: true)
+```
 
 == Le texte
 
@@ -151,6 +238,38 @@ Mes paragraphes sont justifiés à gauche et à droite. Il y a une indentation p
 
 
 == Les listes à puces
+
+#example[Listes à puces][
+  ```typst
+  Exemple avec des caractères Unicode (cf. listes de symboles @i2symbol@ezascii) :
+  
+  #set list(marker: ([➣], [🗹]))
+  - Top-level
+    - Nested
+    - Items
+  - Items
+
+  Exemple avec une icône#footnote[Avec le package Iconify@iconify] :
+  
+    #set list(marker: [#icon("lucide-lab:apple-core", y: -0.5em)],spacing: 1em)
+  - Top-level
+  - Items
+  ```
+][
+  Exemple avec des caractères Unicode (cf. listes de symboles @i2symbol@ezascii) :
+  
+  #set list(marker: ([➣], [🗹]))
+  - Top-level
+    - Nested
+    - Items
+  - Items
+
+  Exemple avec une icône#footnote[Avec le package Iconify@iconify] :
+  
+    #set list(marker: [#icon("lucide-lab:apple-core", y: -0.5em)],spacing: 1em)
+  - Top-level
+  - Items
+]
 == Les énumérations
 == Les descriptions
 
@@ -210,6 +329,7 @@ Le code de l'exemple suivant est celui utilisé dans ce document. La seule chose
   )
 ]
 
+Test Oeuvre automatiquement transformée avec un oeuf
 
 
 
@@ -224,36 +344,7 @@ Le code de l'exemple suivant est celui utilisé dans ce document. La seule chose
 
 
 
-== La page
 
-Ces réglages son également très importants, on va pouvoir définir la taille du papier, son orientation, les marges, etc.
 
-Voici mes propres réglages :
 
-```typst
-#set page(
-  paper: "a4",
-  margin: (inside: 2.5cm, outside: 1.5cm, y: 2cm),
-  numbering: "1"
-)
-```
 
-/ paper : détermine la taille du papier,
-/ margin : permet de configurer les marges,
-/ numbering: définit le type de numérotation
-
-== Le document
-
-Il en reste un qui est invisible, mais qui reste important, c'est le document lui-même.
-
-Sur celui-ci, nous allons simplement poser des méta-données qui seront dans le PDF lui-même. Propriétés utiles notamment en terme d'accessibilité.
-
-```typst
-#set document(
-  title: [Mon Titre],
-  author: "Moi",
-  description: [C'est ou ouvrage qui parle de moi.],
-  keywords: ("moi","ma vie", "mes succès"),
-  date: auto,
-)
-```

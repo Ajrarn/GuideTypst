@@ -37,3 +37,15 @@ typs-doc-par:
   type: Web
   title: Documentation de par
   url: https://typst.app/docs/reference/model/par/#definitions-line
+i2symbol:
+  type: Web
+  title: I2 Symbol
+  url: https://www.i2symbol.com/
+ezascii:
+  type: Web
+  title: EZASCII
+  url: https://ezascii.com/
+iconify:
+  type: Web
+  title: Iconify
+  url: https://typst.app/universe/package/iconify

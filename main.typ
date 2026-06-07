@@ -1,12 +1,20 @@
 // --------------- Imports de modules
-#import "utils.typ": typst
+#import "utils.typ": typst, apply-oe
 #import "template.typ": guide, my-outline, part, citation-block
+
+
+
 #show: guide.with(
-  [Concevoir et rédiger vos documents avec #typst(size: 2em)],
+  [Concevoir et rédiger vos documents avec
+  
+  #typst(size: 1.5em)],
     "Christophe Dos Santos",
-    "un guide sur Typst",
+    "",
     ("Typst","Guide","Français")
 )
+
+#show: apply-oe
+
 
 // --------------- Contenu
 #my-outline
