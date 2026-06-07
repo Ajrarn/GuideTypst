@@ -1,41 +1,35 @@
 // --------------- Imports de modules
-#import "utils.typ": typst
-#import "template.typ": guide, preambule, partie
+#import "utils.typ": typst, apply-oe
+#import "template.typ": guide, my-outline, part, citation-block
+
+
+
 #show: guide.with(
-  [Concevoir et rédiger vos documents avec #typst(size: 2em)],
+  [Concevoir et rédiger vos documents avec
+  
+  #typst(size: 1.5em)],
     "Christophe Dos Santos",
-    "un guide sur Typst",
+    "",
     ("Typst","Guide","Français")
 )
 
+#show: apply-oe
+
+
 // --------------- Contenu
-#preambule(
-  [
-    == Sommaire
-    #outline(
-      depth: 4,
-      title: none
-    )
-    #include "presentation.typ"
-  ]
-)
+#my-outline
 
-#partie(
-  "Dans le petit bassin",
-  complement: [
-    #text(size: 12pt, style: "italic")["Le commencement est la partie la plus importante du travail." — Platon]
-  ]
-)
+#part[Introduction]
+#include "introduction/main.typ"
 
-#include "decouverte/redaction.typ"
-#include "decouverte/packages.typ"
+#part(complement: [
+  #citation-block[Le commencement est la partie la plus importante du travail.][Platon]
+])[Dans le petit bassin]
+#include "decouverte/main.typ"
 
-#partie(
-  "Dans le grand bain",
-  complement: [
-    #text(size: 12pt, style: "italic")["Celui qui n'a pas plongé ne connaît pas la profondeur de la mer." – proverbe persan]
-  ]
-)
+#part(complement: [
+  #citation-block[Celui qui n'a pas plongé ne connaît pas la profondeur de la mer.][proverbe persan]
+])[Dans le grand bain] 
 #include "bain/fonctions.typ"
 #include "bain/positionnement.typ"
 

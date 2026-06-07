@@ -1,8 +1,8 @@
 #import "../utils.typ": feature
 
-== Mise en Page
+= Mise en Page
 
-=== Avant goùt
+== Avant goùt
 ```typst
 #text(font: "Times New Roman")[
   Un petit peu de texte pour lequel on change la police pour la mettre en _Times New Roman_.
@@ -57,9 +57,9 @@ Voici les autres réglages appliqués à ce document :
 #set heading(numbering: "1.")
 ```
 
-=== Personnalisation dans le détail
+== Personnalisation dans le détail
 
-==== Document
+=== Document
 
 la fonction document a les paramètres suivants :
 

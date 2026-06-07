@@ -1,12 +1,6 @@
-#import "@preview/frame-it:1.2.0": frames
+#import "@preview/showybox:2.0.4": showybox,
+#import "template.typ": primary-color, accent-color
 
-#let (example, warning, feature, variant, syntax) = frames(
-  feature: ("Remarque", rgb("ADD8E6")),
-  warning: ("Attention", red.lighten(45%)),
-  variant: ("Variant",),
-  example: ("Exemple", gray),
-  syntax: ("Syntax",),
-)
 
 #let LaTeX = {
   let A = (
@@ -56,3 +50,112 @@
 #let exemple(body) = {
   text(fill:olive,body)
 }
+
+#let example(title, code, result, label: none) = {
+  [
+    #figure(
+      kind: "example",
+      supplement: [Exemple],
+      caption: "",
+      showybox(
+        width: 90%,
+        title-style: (
+          boxed-style: (
+            anchor: (x: center, y: horizon),
+            radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
+          )
+        ),
+        frame: (
+          title-color: blue.lighten(20%),
+          footer-color: white,
+          border-color: blue.darken(20%),
+          radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt)
+        ),
+        footer-style: (
+          color: black
+        ),
+        title: [*#title*],
+        footer: [
+          #result
+        ]
+      )[
+        #code
+      ]
+    )#label
+  ]
+}
+
+#let tips(title, body, label: none) = {
+  [
+    #figure(
+      kind: "tips",
+      supplement: [Astuce],
+      caption: "",
+      showybox(
+        width: 90%,
+        title-style: (
+          boxed-style: (
+            anchor: (x: center, y: horizon),
+            radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt),
+          )
+        ),
+        frame: (
+          title-color: green.lighten(20%),
+          footer-color: white,
+          border-color: green.darken(20%),
+          radius: (top-left: 10pt, bottom-right: 10pt, rest: 0pt)
+        ),
+        title: [*#title*],
+      )[
+        #body
+      ]
+    )#label
+  ]
+}
+
+#let my-table(columns: auto, caption: none, ..children) = {
+  align(center,
+    block(width: 90%,
+      figure(
+        table(
+          columns: columns,
+          ..children,
+        ),
+        caption: caption,
+      )
+    )
+  )
+}
+
+#let apply-oe(body) = {
+  let oe-words = (
+    "Oeuvre": "Œuvre",       "oeuvre": "œuvre",
+    "Oeil": "Œil",           "oeil": "œil",
+    "Oeufs": "Œufs",         "oeuf": "œuf",
+    "Coeur": "Cœur",         "coeur": "cœur",
+    "Soeur": "Sœur",         "soeur": "sœur",
+    "Noeud": "Nœud",         "noeud": "nœud",
+    "Voeu": "Vœu",           "voeu": "vœu",
+    "Moelle": "Moelle",      "moelle": "moelle",
+    "Manoeuvre": "Manœuvre", "manoeuvre": "manœuvre",
+    "Moeurs": "Mœurs",       "moeurs": "mœurs",
+    "Foetus": "Fœtus",       "foetus": "fœtus",
+    "Oedeme": "Œdème",       "oedeme": "œdème",
+  )
+
+  let pairs = oe-words.pairs()
+
+  let apply(i, content) = {
+    if i >= pairs.len() { return content }
+    let (wrong, right) = pairs.at(i)
+    show wrong: right  // ← portée = tout ce que retourne apply()
+    apply(i + 1, content)
+  }
+
+  apply(0, body)
+}
+
+
+
+
+
