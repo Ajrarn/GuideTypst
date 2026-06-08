@@ -59,6 +59,9 @@ jobs:
         uses: lvignoli/typst-action@v0
         with:
           source_file: main.typ
+          options: |
+            --font-path
+            fonts
 
       - name: Rename PDF with version
         run: |
