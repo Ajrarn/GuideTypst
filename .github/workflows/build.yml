@@ -61,7 +61,7 @@ jobs:
           source_file: main.typ
           options: |
             --font-path
-            fonts
+            fonts/
 
       - name: Rename PDF with version
         run: |
