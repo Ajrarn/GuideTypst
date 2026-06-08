@@ -55,14 +55,12 @@ jobs:
           git diff --staged --quiet || git commit -m "chore: bump version to ${{ steps.increment_version.outputs.new_version }} [skip ci]"
           git push
 
+      - name: Install Typst
+        uses: typst-community/setup-typst@v4
+
       - name: Build Typst document
-        uses: lvignoli/typst-action@v0
-        with:
-          source_file: main.typ
-          options: |
-            --font-path
-            fonts/
-            -vv
+        run: typst compile --font-path fonts/. main.typ
+
       - name: Rename PDF with version
         run: |
           mv main.pdf guideTypst-v${{ steps.increment_version.outputs.new_version }}.pdf
