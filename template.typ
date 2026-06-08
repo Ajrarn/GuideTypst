@@ -292,28 +292,6 @@
   // show rule
   show table.cell: set text(size:0.9em)
   show table.cell.where(y: 0): set text(weight: "bold", fill: white)
-
-  //test Show rules
-  // show "Oeuvre": word => [Œuvre]
-  let oe-words = (
-    "Oeuvre": [Œuvre], "oeuvre": "œuvre",
-    "Oeil": "Œil",     "oeil": "œil",
-    "Oeufs": "Œufs",   "oeuf": "œuf",
-    "Coeur": "Cœur",   "coeur": "cœur",
-    "Soeur": "Sœur",   "soeur": "sœur",
-    "Noeud": "Nœud",   "noeud": "nœud",
-    "Voeu": "Vœu",     "voeu": "vœu",
-    "Moelle": "Moelle", "moelle": "moelle",  // œ !
-    "Manoeuvre": "Manœuvre", "manoeuvre": "manœuvre",
-    "Moeurs": "Mœurs", "moeurs": "mœurs",
-    "Foetus": "Fœtus", "foetus": "fœtus",
-    "Oedeme": "Œdème", "oedeme": "œdème",
-  )
-  
-  for (wrong, right) in oe-words.pairs() {
-    show str(wrong): word => right
-  }
-
   
   // Document body
   body

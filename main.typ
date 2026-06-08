@@ -5,13 +5,26 @@
 
 
 #show: guide.with(
-  [Concevoir et rédiger vos documents avec
+  [
+    Concevoir et rédiger vos documents avec
   
-  #typst(size: 1.5em)],
-    "Christophe Dos Santos",
-    "",
-    ("Typst","Guide","Français")
+    #typst(size: 1.5em)
+  ],
+  "Christophe Dos Santos",
+  "",
+  ("Typst","Guide","Français")
 )
+
+#align(center)[
+    Ce guide est mis à disposition selon les termes de la\
+    #link("https://creativecommons.org/licenses/by-sa/4.0/deed.fr")[
+      Licence Creative Commons Attribution – Partage dans les Mêmes Conditions 4.0 International
+    ].
+    #image("assets/Creative Commons BY-SA.svg", width: 3cm)
+  
+    Le code source est disponible sous licence MIT.
+
+]
 
 #show: apply-oe
 
