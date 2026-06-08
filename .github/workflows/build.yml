@@ -62,7 +62,7 @@ jobs:
           options: |
             --font-path
             fonts/
-
+            -vv
       - name: Rename PDF with version
         run: |
           mv main.pdf guideTypst-v${{ steps.increment_version.outputs.new_version }}.pdf
